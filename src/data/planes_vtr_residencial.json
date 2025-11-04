@@ -1,0 +1,1081 @@
+{
+  "1_RGU": [
+    {
+      "nombre": "Internet Hogar",
+      "precio": 21990,
+      "descuento_nacional": 5000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Internet Hogar Sports",
+      "precio": 27990,
+      "descuento_nacional": 5000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Hogar",
+      "precio": 21990,
+      "descuento_nacional": 5000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Hogar Sports",
+      "precio": 27990,
+      "descuento_nacional": 5000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Avanzado",
+      "precio": 23990,
+      "descuento_nacional": 9000,
+      "descuento_especial": 11000,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Avanzado Sports",
+      "precio": 29990,
+      "descuento_nacional": 6000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Experto",
+      "precio": 29990,
+      "descuento_nacional": 8000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Experto Sports",
+      "precio": 35990,
+      "descuento_nacional": 8000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Stream TV Plus",
+      "precio": 22990,
+      "descuento_nacional": null,
+      "descuento_especial": null,
+      "duracion": "Por siempre",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": false,
+          "velocidad": null
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Stream TV Premium",
+      "precio": 28990,
+      "descuento_nacional": null,
+      "descuento_especial": null,
+      "duracion": "Por siempre",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": false,
+          "velocidad": null
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fono Ilimitado 600 Móvil",
+      "precio": 12990,
+      "descuento_nacional": null,
+      "descuento_especial": null,
+      "duracion": "Por siempre",
+      "rgu": 1,
+      "servicios": {
+        "internet": {
+          "activo": false,
+          "velocidad": null
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    }
+  ],
+  "2_RGU": [
+    {
+      "nombre": "2 Play Inicia Internet Hogar",
+      "precio": 41990,
+      "descuento_nacional": 17000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Plus Internet Hogar",
+      "precio": 41990,
+      "descuento_nacional": 11000,
+      "descuento_especial": 15000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Premium Internet Hogar",
+      "precio": 46990,
+      "descuento_nacional": 13000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Internet Hogar + Fono Ilimitado 600 Móvil",
+      "precio": 23990,
+      "descuento_nacional": 0,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Inicia Fibra Hogar",
+      "precio": 41990,
+      "descuento_nacional": 17000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Plus Fibra Hogar",
+      "precio": 41990,
+      "descuento_nacional": 11000,
+      "descuento_especial": 15000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Premium Fibra Hogar",
+      "precio": 46990,
+      "descuento_nacional": 13000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Hogar + Fono Ilimitado 600 Móvil",
+      "precio": 23990,
+      "descuento_nacional": 0,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Inicia Fibra Avanzado",
+      "precio": 42990,
+      "descuento_nacional": 16000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Plus Fibra Avanzado",
+      "precio": 42990,
+      "descuento_nacional": 9000,
+      "descuento_especial": 14000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Premium Fibra Avanzado",
+      "precio": 47990,
+      "descuento_nacional": 9000,
+      "descuento_especial": 16000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Avanzado + Fono Ilimitado 600 Móvil",
+      "precio": 26990,
+      "descuento_nacional": 0,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Inicia Fibra Experto",
+      "precio": 47990,
+      "descuento_nacional": 17000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Plus Fibra Experto",
+      "precio": 47990,
+      "descuento_nacional": 11000,
+      "descuento_especial": 15000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "2 Play Premium Fibra Experto",
+      "precio": 52990,
+      "descuento_nacional": 12000,
+      "descuento_especial": 18000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": false
+        }
+      }
+    },
+    {
+      "nombre": "Fibra Experto + Fono Ilimitado 600 Móvil",
+      "precio": 35990,
+      "descuento_nacional": 0,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": false,
+          "plan_tv": null
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    }
+  ],
+  "3_RGU": [
+    {
+      "nombre": "3 Play Inicia Internet Hogar",
+      "precio": 46990,
+      "descuento_nacional": 21000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Internet Hogar",
+      "precio": 46990,
+      "descuento_nacional": 15000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Internet Hogar",
+      "precio": 51990,
+      "descuento_nacional": 17000,
+      "descuento_especial": 23000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Inicia Fibra Hogar",
+      "precio": 46990,
+      "descuento_nacional": 21000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Fibra Hogar",
+      "precio": 47990,
+      "descuento_nacional": 16000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Fibra Hogar",
+      "precio": 51990,
+      "descuento_nacional": 17000,
+      "descuento_especial": 23000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Inicia Fibra Avanzado",
+      "precio": 47990,
+      "descuento_nacional": 20000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Fibra Avanzado",
+      "precio": 47990,
+      "descuento_nacional": 13000,
+      "descuento_especial": 18000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Fibra Avanzado",
+      "precio": 53900,
+      "descuento_nacional": 13990,
+      "descuento_especial": 20910,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Inicia Fibra Experto",
+      "precio": 52990,
+      "descuento_nacional": 21000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Fibra Experto",
+      "precio": 52990,
+      "descuento_nacional": 15000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Fibra Experto",
+      "precio": 58990,
+      "descuento_nacional": 17000,
+      "descuento_especial": 23000,
+      "duracion": "12 Meses",
+      "rgu": 3,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    }
+  ],
+  "paquetizacion": [
+    {
+      "nombre": "3 Play Inicia Internet Hogar",
+      "precio": 46990,
+      "descuento_nacional": 21000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Internet Hogar",
+      "precio": 46990,
+      "descuento_nacional": 15000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Internet Hogar",
+      "precio": 51990,
+      "descuento_nacional": 17000,
+      "descuento_especial": 23000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "500MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Inicia Fibra Hogar",
+      "precio": 46990,
+      "descuento_nacional": 21000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Fibra Hogar",
+      "precio": 47990,
+      "descuento_nacional": 16000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Fibra Hogar",
+      "precio": 51990,
+      "descuento_nacional": 17000,
+      "descuento_especial": 23000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "600MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Inicia Fibra Avanzado",
+      "precio": 47990,
+      "descuento_nacional": 20000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Fibra Avanzado",
+      "precio": 47990,
+      "descuento_nacional": 13000,
+      "descuento_especial": 18000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Fibra Avanzado",
+      "precio": 53900,
+      "descuento_nacional": 13990,
+      "descuento_especial": 20910,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "800MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Inicia Fibra Experto",
+      "precio": 52990,
+      "descuento_nacional": 21000,
+      "descuento_especial": null,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Inicia"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Plus Fibra Experto",
+      "precio": 52990,
+      "descuento_nacional": 15000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Plus"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    },
+    {
+      "nombre": "3 Play Premium Fibra Experto",
+      "precio": 52990,
+      "descuento_nacional": 15000,
+      "descuento_especial": 19000,
+      "duracion": "12 Meses",
+      "rgu": 2,
+      "servicios": {
+        "internet": {
+          "activo": true,
+          "velocidad": "940MB"
+        },
+        "television": {
+          "activo": true,
+          "plan_tv": "Premium"
+        },
+        "telefonia": {
+          "activo": true
+        }
+      }
+    }
+  ]
+}

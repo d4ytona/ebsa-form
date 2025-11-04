@@ -1,0 +1,233 @@
+{
+  "jose.solano@ebsaspa.cl": {
+    "equipo": "Test",
+    "supervisor": "Jose Solano",
+    "vendedores": {
+      "Test": null,
+      "Braulio Salinas": null
+    }
+  },
+  "canal.digital@ebsaspa.cl": {
+    "equipo": "Canal digital",
+    "supervisor": "Braulio Salinas",
+    "vendedores": {
+      "Canal Digital": null
+    }
+  },
+  "machine@ebsaspa.cl": {
+    "equipo": "Machine",
+    "supervisor": "Yetzabeth Martinez",
+    "vendedores": {
+      "Adriana Farías": "honorario",
+      "Daniela Ormeño": "honorario",
+      "David Espejo": "honorario",
+      "Desiree Oropeza": "honorario",
+      "Fabiana Quintero": "honorario",
+      "Franklin Prieto": "honorario",
+      "Gledys Romero": "honorario",
+      "Gregoria Martinez": "honorario",
+      "Jenny Alizo": "honorario",
+      "Jesus Lopez": "honorario",
+      "Nereida Hernandez": "honorario",
+      "Victor Machado": "honorario"
+    }
+  },
+  "notrex@ebsaspa.cl": {
+    "equipo": "Notrex",
+    "supervisor": "Yetzabeth Martinez",
+    "vendedores": {
+      "Adriana Noguera": "honorario",
+      "Andres Alvarado": "honorario",
+      "Keiny Gonzalez": "honorario",
+      "Lucia Boscan": "honorario",
+      "Luis Bermudez": "honorario",
+      "Nolbelys Carruyo": "honorario",
+      "Omayra Cardenas": "honorario",
+      "Pierina Puche": "honorario",
+      "Saul Reyes": "honorario",
+      "Saray Benega": "honorario"
+    }
+  },
+  "elias.tapia@ebsaspa.cl": {
+    "equipo": "Elias tapia",
+    "supervisor": "Elias Tapia",
+    "vendedores": {
+      "Aileen Ulloa": null,
+      "Andres Muñoz": null,
+      "Celeste Venegas": null,
+      "Diego Villalobos": null,
+      "Elias Tapia": null,
+      "Elizabeth Valdes": null,
+      "Gabriel Fernandez": null,
+      "Luz Leiva": null,
+      "Marcela Mancilla": null,
+      "Matias Concha": null,
+      "Paola Correa": null,
+      "Yuleicy Rodriguez": null
+    }
+  },
+  "valeria.diaz@ebsaspa.cl": {
+    "equipo": "Valeria diaz",
+    "supervisor": "Elias Tapia",
+    "vendedores": {
+      "Ana Maria Moya": null,
+      "Angela Sanchez": null,
+      "Barbara Garay": null,
+      "Charlie Sepulveda": null,
+      "Cristopher Romero": null,
+      "Elias Insunza (Free)": null,
+      "Estephanie Medina": null,
+      "Georgina Chepe": null,
+      "Hector Ramirez": null,
+      "Jessica Oliva": null,
+      "Kyle Ulloa": null,
+      "Marco Castro": null,
+      "Miriam Seguel": null,
+      "Nicolas Lastra": null,
+      "Olga Montecinos": null,
+      "Olivia Navarrete": null,
+      "Silvana Lara": null,
+      "Tania Cornejo": null,
+      "Tania Vergara": null,
+      "Valeria Diaz": null
+    }
+  },
+  "esteban.celis@ebsaspa.cl": {
+    "equipo": "Esteban celis",
+    "supervisor": "Elias Tapia",
+    "vendedores": {
+      "Constanza Palma": null,
+      "Cristian Tache": null,
+      "Esteban Celis": null,
+      "Mariana Carrasco": null,
+      "Valery Gallegos": null
+    }
+  },
+  "ismael.fernandez@ebsaspa.cl": {
+    "equipo": "Ismael fernandez",
+    "supervisor": "Elias Tapia",
+    "vendedores": {
+      "Ismael Fernandez": null
+    }
+  },
+  "felipe.castillo@ebsaspa.cl": {
+    "equipo": "Felipe castillo",
+    "supervisor": "Cristian Letelier",
+    "vendedores": {
+      "Elizabeth Rojas": null,
+      "Felipe Castillo": null
+    }
+  },
+  "luis.torres@ebsaspa.cl": {
+    "equipo": "Luis torres",
+    "supervisor": "Cristian Letelier",
+    "vendedores": {
+      "Amanda Torres": null,
+      "Ana Rodriguez": null,
+      "Ayerim Rojas": null,
+      "Estefania Rojas": null,
+      "Fran Solarte": null,
+      "Jacky Castillo": null,
+      "Jean Carlos Maripan": null,
+      "Kote Araneda": null,
+      "Lilian Marino": null,
+      "Luis Torres": null,
+      "Luris Nieves": null,
+      "Maria Molero": null,
+      "Mariangel Garcia": null,
+      "Paraguay 2.0": null,
+      "Roberto Novoa": null,
+      "Sadi Ramirez": null,
+      "Sebastian Salas": null,
+      "Veronica Miranda": null
+    }
+  },
+  "roberto.padilla@ebsaspa.cl": {
+    "equipo": "Roberto padilla",
+    "supervisor": "Cristian Letelier",
+    "vendedores": {
+      "Catalina Araya": null,
+      "Damaris Parra": null,
+      "Duvan Gonzalez": null,
+      "Francesca Contreras": null,
+      "Georgina Pacheco": null,
+      "Manuel Galvez": null,
+      "Margarita Zuñiga": null,
+      "Michelle Llanca": null,
+      "Miguel Córdoba": null,
+      "Norma Ortiz": null,
+      "Rafael Torres": null,
+      "Roberto Padilla": null,
+      "Silvia Leal": null,
+      "Víctor Diaz": null,
+      "Violeta Saez": null
+    }
+  },
+  "valentina.agostini@ebsaspa.cl": {
+    "equipo": "Valentina agostini",
+    "supervisor": "Cristian Letelier",
+    "vendedores": {
+      "Esteban Gonzalez": null,
+      "Karina Videla": null,
+      "Makarena Sanchez": null,
+      "Valentina Agostini": null
+    }
+  },
+  "gonzalo.bernal@ebsaspa.cl": {
+    "equipo": "Gonzalo bernal",
+    "supervisor": "Cristian Letelier",
+    "vendedores": {
+      "Felipe Gonzalez": null,
+      "Gonzalo Bernal": null,
+      "Jhonny Morales": null,
+      "Karla Tapia": null,
+      "Nicol Vargas": null,
+      "Pablo Patiño": null,
+      "Pablo Plaza": null,
+      "Rosa Valencia": null,
+      "Sergio Toro": null,
+      "Thierry Leon": null
+    }
+  },
+  "franco.munoz@ebsaspa.cl": {
+    "equipo": "Franco munoz",
+    "supervisor": "Francisco Silva",
+    "vendedores": {
+      "Franco Munoz": null
+    }
+  },
+  "ariel.palacios@ebsaspa.cl": {
+    "equipo": "Ariel palacios",
+    "supervisor": "Francisco Silva",
+    "vendedores": {
+      "Ariel Palacios": null
+    }
+  },
+  "gerald.alarcon@ebsaspa.cl": {
+    "equipo": "Gerald alarcon",
+    "supervisor": "Francisco Silva",
+    "vendedores": {
+      "Gerald Alarcon": null
+    }
+  },
+  "jorge.fuenzalida@ebsaspa.cl": {
+    "equipo": "Jorge fuenzalida",
+    "supervisor": "Jorge Fuenzalida",
+    "vendedores": {
+      "Barbara Tapia": null,
+      "Cristian Aguila": null,
+      "Dina Herrera": null,
+      "Gaston Diaz": null,
+      "Jacky Castillo": null,
+      "Jocelyn Lazo": null,
+      "Jorge Fuenzalida": null,
+      "Jose Miranda": null,
+      "Lucía Duarte": null,
+      "Marcos Droguett": null,
+      "Maria Troncozo": null,
+      "Maritza Arriagada": null,
+      "Natalia Hernandez": null,
+      "Nisset Polanco": null
+    }
+  }
+}

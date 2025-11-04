@@ -1,0 +1,80 @@
+{
+  "distribuidores": [
+    {
+      "id": "ebsa",
+      "nombre": "EBSA",
+      "marcas": [
+        { "id": "vtr", "nombre": "VTR" },
+        { "id": "claro", "nombre": "Claro" }
+      ],
+      "codigos": [
+        "aagostini",
+        "aespina",
+        "agraterol",
+        "amoyam",
+        "aulloaf",
+        "bgaray",
+        "carayair",
+        "cetapia",
+        "cmundaca",
+        "cnunezm",
+        "cpalmap",
+        "ecelis",
+        "egonzalezy",
+        "einzunza",
+        "etapiac",
+        "evaldesf",
+        "fcontreras",
+        "fortegaz",
+        "fsotob",
+        "gagostini",
+        "jhgonzalez",
+        "kulloa",
+        "ltorresg",
+        "lumunoz",
+        "macastroli",
+        "mcarrascoe",
+        "meduran",
+        "mgalvezm",
+        "mifernandezm",
+        "mzunigas",
+        "onavarrete",
+        "pcorreap",
+        "rpadilla",
+        "rsalinasg",
+        "skmedina",
+        "slarag",
+        "tcornejo",
+        "ugonzalezm",
+        "vadiazs",
+        "vgallegos"
+      ]
+    },
+    {
+      "id": "xr3",
+      "nombre": "XR3",
+      "marcas": [
+        { "id": "vtr", "nombre": "VTR" }
+      ],
+      "codigos": [
+        "imuozh",
+        "sbustamante",
+        "cmuozh",
+        "lpierre",
+        "iallendes",
+        "apcarrasco"
+      ]
+    },
+    {
+      "id": "telcosur",
+      "nombre": "TELCOSUR",
+      "marcas": [
+        { "id": "vtr", "nombre": "VTR" }
+      ],
+      "codigos": [
+        "clruiz",
+        "aospinag"
+      ]
+    }
+  ]
+}
