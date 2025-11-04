@@ -283,7 +283,7 @@ export function InformacionAdicional({
                         className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
                       />
                       <span className="ml-3 text-gray-900 font-medium">
-                        {tramo.id.toUpperCase()}. {tramo.inicio} - {tramo.fin}
+                        {tramo.id.toUpperCase()}. {tramo.inicio.replace(':00', '')} - {tramo.fin.replace(':00', '')}
                       </span>
                       {!estaDisponible && (
                         <span className="ml-auto text-sm text-gray-500">No disponible</span>

@@ -524,6 +524,64 @@ export function Confirmacion() {
             </ul>
           </div>
 
+          {/* Sección de Archivos Subidos */}
+          {(formData.rutFrontalUrls?.length > 0 ||
+            formData.rutPosteriorUrls?.length > 0 ||
+            formData.factibilidadUrls?.length > 0 ||
+            formData.otrosDocumentosUrls?.length > 0) && (
+            <div className="mt-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Documentos Adjuntos
+              </h3>
+              <ul className="space-y-2">
+                {formData.rutFrontalUrls?.map((url, index) => (
+                  <li key={`rut-frontal-${index}`} className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium text-gray-700">RUT Frontal:</span>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm truncate">
+                      {url.split('/').pop()}
+                    </a>
+                  </li>
+                ))}
+                {formData.rutPosteriorUrls?.map((url, index) => (
+                  <li key={`rut-posterior-${index}`} className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium text-gray-700">RUT Posterior:</span>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm truncate">
+                      {url.split('/').pop()}
+                    </a>
+                  </li>
+                ))}
+                {formData.factibilidadUrls?.map((url, index) => (
+                  <li key={`factibilidad-${index}`} className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium text-gray-700">Factibilidad:</span>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm truncate">
+                      {url.split('/').pop()}
+                    </a>
+                  </li>
+                ))}
+                {formData.otrosDocumentosUrls?.map((url, index) => (
+                  <li key={`otros-${index}`} className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium text-gray-700">Otros Documentos:</span>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm truncate">
+                      {url.split('/').pop()}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Mensaje de error si hay alguno */}
           {submitError && (
             <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
