@@ -105,10 +105,22 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log('=== Inicio de upload-file ===');
     const { file, filename, contentType, categoria, rut, docNumber } = req.body;
+
+    console.log('Datos recibidos:', {
+      hasFile: !!file,
+      filename,
+      contentType,
+      categoria,
+      rut,
+      docNumber,
+      fileSize: file ? file.length : 0
+    });
 
     // Validaciones
     if (!file || !filename || !contentType || !categoria || !rut) {
+      console.log('Error: Faltan campos requeridos');
       return res.status(400).json({
         success: false,
         message: 'Faltan campos requeridos: file, filename, contentType, categoria, rut'
@@ -161,6 +173,12 @@ export default async function handler(req, res) {
     const key = `${config.folder}/${fileName}`;
 
     console.log(`Subiendo archivo: ${key} (${buffer.length} bytes)`);
+    console.log('Variables R2:', {
+      accountId: process.env.R2_ACCOUNT_ID?.substring(0, 8) + '...',
+      bucketName: process.env.R2_BUCKET_NAME,
+      hasAccessKey: !!process.env.R2_ACCESS_KEY_ID,
+      hasSecretKey: !!process.env.R2_SECRET_ACCESS_KEY
+    });
 
     // Subir a R2
     const command = new PutObjectCommand({
@@ -176,7 +194,9 @@ export default async function handler(req, res) {
       }
     });
 
+    console.log('Enviando comando a R2...');
     await S3.send(command);
+    console.log('Comando enviado exitosamente');
 
     // Construir URL pública usando el dominio personalizado
     const publicUrl = `https://ebsaspa.cl/${key}`;
@@ -193,11 +213,18 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('Error al subir archivo a R2:', error);
+    console.error('=== Error al subir archivo a R2 ===');
+    console.error('Error completo:', error);
+    console.error('Stack:', error.stack);
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+
     return res.status(500).json({
       success: false,
       message: 'Error al subir archivo',
-      error: error.message
+      error: error.message,
+      errorName: error.name,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 }
