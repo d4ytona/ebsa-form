@@ -363,8 +363,8 @@ export function PlanSelector({
                       {/* Badge de marca con colores */}
                       <span className={`px-3 py-1 rounded-md text-xs font-bold ${
                         marca.toLowerCase() === 'vtr'
-                          ? 'bg-gradient-to-r from-purple-600 to-purple-800 text-white'
-                          : 'bg-gradient-to-r from-red-600 to-pink-600 text-white'
+                          ? 'bg-gradient-to-r from-purple-600 to-purple-900 text-white'
+                          : 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
                       }`}>
                         {marca.toUpperCase()}
                       </span>

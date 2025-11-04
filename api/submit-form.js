@@ -2,6 +2,12 @@
  * @fileoverview Función serverless para enviar datos del formulario a Google Sheets.
  * Mapea campos del formulario a columnas específicas en la pestaña Fijo_EBSA.
  * Maneja autenticación con Google Service Account y expansión automática de filas.
+ *
+ * Testing modular con query params:
+ * - ?test=validation - Solo valida datos recibidos
+ * - ?test=supabase - Solo guarda en Supabase
+ * - ?test=sheets - Solo guarda en Google Sheets
+ * - Sin params - Funcionamiento normal (ambos)
  */
 
 import { google } from "googleapis";
@@ -157,7 +163,28 @@ export default async function handler(req, res) {
 
   try {
     const formData = req.body;
+    const testMode = req.query?.test || null; // validation, supabase, sheets, o null (normal)
+
     console.log("Recibiendo datos del formulario...");
+    console.log("Modo de testing:", testMode || "normal");
+
+    // === FASE 1: VALIDACIÓN DE DATOS ===
+    if (testMode === "validation") {
+      console.log("TEST MODE: Solo validación de datos");
+      return res.status(200).json({
+        success: true,
+        mode: "validation",
+        message: "Datos recibidos correctamente",
+        data: {
+          tieneVendedor: !!formData.selectedVendedor,
+          tieneCodigo: !!formData.selectedCodigo,
+          tieneMarca: !!formData.selectedMarca,
+          tieneRut: !!formData.rut,
+          tienePlan: !!formData.selectedPlan,
+          camposRecibidos: Object.keys(formData).length,
+        },
+      });
+    }
 
     const auth = getAuth();
     const sheets = google.sheets({ version: "v4", auth });
@@ -265,24 +292,41 @@ export default async function handler(req, res) {
       console.log("Nueva fila agregada exitosamente");
     }
 
+    // === FASE 2: GUARDAR EN GOOGLE SHEETS ===
     // Escribir cada valor en su columna correspondiente
     const updates = Object.entries(columnData).map(([column, value]) => ({
       range: `Fijo_EBSA!${column}${nextRow}`,
       values: [[value]],
     }));
 
-    // Hacer batch update para escribir todas las columnas a la vez
-    await sheets.spreadsheets.values.batchUpdate({
-      spreadsheetId: SPREADSHEET_ID,
-      resource: {
-        valueInputOption: "USER_ENTERED",
-        data: updates,
-      },
-    });
+    // Solo guardar en Sheets si NO es modo test=supabase
+    if (testMode !== "supabase") {
+      // Hacer batch update para escribir todas las columnas a la vez
+      await sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: SPREADSHEET_ID,
+        resource: {
+          valueInputOption: "USER_ENTERED",
+          data: updates,
+        },
+      });
 
-    console.log(
-      `Formulario guardado exitosamente en Sheets con timestamp: ${timestamp}`
-    );
+      console.log(
+        `Formulario guardado exitosamente en Sheets con timestamp: ${timestamp}`
+      );
+    } else {
+      console.log("TEST MODE: Saltando guardado en Google Sheets");
+    }
+
+    // Si estamos en modo test=sheets, retornar aquí
+    if (testMode === "sheets") {
+      return res.status(200).json({
+        success: true,
+        mode: "sheets",
+        message: "Datos guardados solo en Google Sheets",
+        timestamp,
+        fila: nextRow,
+      });
+    }
 
     // Verificar si vendedor y código están en las listas de Supabase
     // Para convertir a null si no están en la lista
@@ -335,8 +379,13 @@ export default async function handler(req, res) {
       console.log("Código vacío, se guardará como null");
     }
 
-    // Guardar en Supabase SIEMPRE (con null si valores no válidos)
-    const { data: pedidoData, error: supabaseError } = await supabase
+    // === FASE 3: GUARDAR EN SUPABASE ===
+    // Solo guardar en Supabase si NO es modo test=sheets
+    let pedido = null;
+
+    if (testMode !== "sheets") {
+      // Guardar en Supabase (con null si valores no válidos)
+      const { data: pedidoData, error: supabaseError } = await supabase
       .from("pedidos")
       .insert({
         observacion_vendedor: formData.comentarioVendedor,
@@ -382,16 +431,30 @@ export default async function handler(req, res) {
             : null,
         fila_sheets: nextRow,
       })
-      .select()
-      .single();
+        .select()
+        .single();
 
-    let pedido = null;
-    if (supabaseError) {
-      console.error("Error al guardar en Supabase:", supabaseError);
-      // No fallar el request si Supabase falla, ya se guardó en Sheets
+      if (supabaseError) {
+        console.error("Error al guardar en Supabase:", supabaseError);
+        // No fallar el request si Supabase falla, ya se guardó en Sheets
+      } else {
+        pedido = pedidoData;
+        console.log("Pedido guardado en Supabase con ID:", pedido.id);
+      }
     } else {
-      pedido = pedidoData;
-      console.log("Pedido guardado en Supabase con ID:", pedido.id);
+      console.log("TEST MODE: Saltando guardado en Supabase");
+    }
+
+    // Si estamos en modo test=supabase, retornar aquí
+    if (testMode === "supabase") {
+      return res.status(200).json({
+        success: true,
+        mode: "supabase",
+        message: "Datos guardados solo en Supabase",
+        pedidoId: pedido?.id,
+        vendedorValidado: !!vendedorParaSupabase,
+        codigoValidado: !!codigoParaSupabase,
+      });
     }
 
     res.status(200).json({
