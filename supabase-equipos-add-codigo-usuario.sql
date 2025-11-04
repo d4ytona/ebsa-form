@@ -23,6 +23,10 @@ UPDATE equipos SET codigo_usuario = '200304' WHERE email = 'valentina.agostini@e
 UPDATE equipos SET codigo_usuario = '200501' WHERE email = 'gonzalo.bernal@ebsaspa.cl';
 UPDATE equipos SET codigo_usuario = '200506' WHERE email = 'franco.munoz@ebsaspa.cl';
 UPDATE equipos SET codigo_usuario = '300102' WHERE email = 'jorge.fuenzalida@ebsaspa.cl';
+UPDATE equipos SET codigo_usuario = '300101' WHERE email = 'canal.digital@ebsaspa.cl';
+UPDATE equipos SET codigo_usuario = '100101' WHERE email = 'machine@ebsaspa.cl';
+UPDATE equipos SET codigo_usuario = '100102' WHERE email = 'notrex@ebsaspa.cl';
+UPDATE equipos SET codigo_usuario = '000000' WHERE email = 'jose.solano@ebsaspa.cl';
 
 -- Verificar que se insertaron correctamente
 SELECT email, codigo_usuario, nombre
