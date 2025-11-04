@@ -245,8 +245,9 @@ export function PlanSelector({
       const tieneDescuentoEspecial = planDB.descuento_especial !== null && planDB.descuento_especial > 0
 
       // Función helper para convertir plan DB a formato UI
+      // Nota: No incluimos la marca en el nombre, se mostrará como badge visual
       const convertirPlan = (nombre: string, descuentoNacional: number, descuentoEspecial: number | null): Plan => ({
-        nombre: `${normalizarNombre(nombre)} - ${marca.toUpperCase()}`,
+        nombre: normalizarNombre(nombre),
         precio: planDB.precio,
         descuento_nacional: descuentoNacional,
         descuento_especial: descuentoEspecial,
@@ -359,6 +360,14 @@ export function PlanSelector({
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="flex items-center gap-2">
+                      {/* Badge de marca con colores */}
+                      <span className={`px-3 py-1 rounded-md text-xs font-bold ${
+                        marca.toLowerCase() === 'vtr'
+                          ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white'
+                          : 'bg-gradient-to-r from-red-600 to-pink-600 text-white'
+                      }`}>
+                        {marca.toUpperCase()}
+                      </span>
                       <p className="font-semibold text-gray-900">{plan.nombre}</p>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">Duración: {plan.duracion}</p>

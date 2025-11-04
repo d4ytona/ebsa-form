@@ -607,7 +607,12 @@ export function Form({ user, onSignOut }: FormProps) {
       return false;
     }
 
-    return selectedVendedor && selectedMarca && selectedCodigo && selectedSegmento && selectedTipoVenta;
+    // Permitir valores vacíos en vendedor y código (se validan como !== null y !== undefined)
+    return selectedVendedor !== null && selectedVendedor !== undefined &&
+           selectedMarca &&
+           selectedCodigo !== null && selectedCodigo !== undefined &&
+           selectedSegmento &&
+           selectedTipoVenta;
   };
 
   /**
