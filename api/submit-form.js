@@ -4,8 +4,8 @@
  * Maneja autenticación con Google Service Account y expansión automática de filas.
  */
 
-import { google } from 'googleapis';
-import { createClient } from '@supabase/supabase-js';
+import { google } from "googleapis";
+import { createClient } from "@supabase/supabase-js";
 
 /**
  * ID de la hoja de cálculo de Google Sheets donde se almacenan los datos.
@@ -31,14 +31,16 @@ const supabase = createClient(
 function formatTimestamp() {
   // Crear fecha en hora chilena (America/Santiago)
   const now = new Date();
-  const chileTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Santiago' }));
+  const chileTime = new Date(
+    now.toLocaleString("en-US", { timeZone: "America/Santiago" })
+  );
 
-  const day = String(chileTime.getDate()).padStart(2, '0');
-  const month = String(chileTime.getMonth() + 1).padStart(2, '0');
+  const day = String(chileTime.getDate()).padStart(2, "0");
+  const month = String(chileTime.getMonth() + 1).padStart(2, "0");
   const year = chileTime.getFullYear();
-  const hours = String(chileTime.getHours()).padStart(2, '0');
-  const minutes = String(chileTime.getMinutes()).padStart(2, '0');
-  const seconds = String(chileTime.getSeconds()).padStart(2, '0');
+  const hours = String(chileTime.getHours()).padStart(2, "0");
+  const minutes = String(chileTime.getMinutes()).padStart(2, "0");
+  const seconds = String(chileTime.getSeconds()).padStart(2, "0");
 
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
@@ -49,12 +51,15 @@ function formatTimestamp() {
  * @returns {GoogleAuth} Objeto de autenticación configurado con permisos de Sheets
  */
 function getAuth() {
-  return new google.auth.GoogleAuth({
-    credentials: {
-      client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    },
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  const privateKeyRaw = process.env.GOOGLE_SHEETS_PRIVATE_KEY || "";
+  const privateKey = privateKeyRaw.includes("\\n")
+    ? privateKeyRaw.replace(/\\n/g, "\n")
+    : privateKeyRaw;
+
+  return new google.auth.JWT({
+    email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+    key: privateKey,
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
 }
 
@@ -126,85 +131,100 @@ function getAuth() {
  */
 export default async function handler(req, res) {
   // Habilitar CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
   );
 
   // Manejar preflight request
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     res.status(200).end();
     return;
   }
 
   // Solo aceptar POST
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, message: 'Method not allowed' });
+  if (req.method !== "POST") {
+    return res
+      .status(405)
+      .json({ success: false, message: "Method not allowed" });
   }
 
   try {
     const formData = req.body;
-    console.log('Recibiendo datos del formulario...');
+    console.log("Recibiendo datos del formulario...");
 
     const auth = getAuth();
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({ version: "v4", auth });
 
     // Crear la marca temporal
     const timestamp = formatTimestamp();
 
     // Función helper para convertir a mayúsculas
-    const toUpper = (str) => str ? String(str).toUpperCase() : '';
+    const toUpper = (str) => (str ? String(str).toUpperCase() : "");
 
     // Calcular RGU (cantidad de servicios)
     const rgu = [
       formData.hasInternet,
       formData.hasTelevision,
-      formData.hasTelefonia
+      formData.hasTelefonia,
     ].filter(Boolean).length;
 
     // Preparar objeto con los valores mapeados a las columnas correctas (NUEVO MAPEO)
     const columnData = {
-      'J': toUpper(formData.comentarioVendedor), // OBSERVACION VENDEDOR
-      'K': toUpper(formData.selectedMarca), // MARCA
-      'P': toUpper(formData.selectedCodigo), // CODIGO DE VENDEDOR (NOMBRE DE USUARIO USADO PARA VALIDAR)
-      'Q': timestamp, // Marca temporal (formato DD/MM/YYYY HH:MM:SS - Hora Chile)
-      'R': toUpper(formData.selectedTipoVenta), // TIPO VENTA
-      'S': toUpper(formData.selectedSegmento), // SEGMENTO DE VENTA
-      'T': toUpper(formData.tipoAgente), // AGENTE
-      'BC': toUpper(formData.equipo), // EQUIPO
-      'BE': toUpper(formData.selectedVendedor), // VENDEDOR
-      'AN': toUpper(formData.rut), // RUT SOLICITANTE
-      'AO': toUpper(`${formData.nombres} ${formData.apellidos}`), // NOMBRE SOLICITANTE
-      'AP': toUpper(formData.rutEmpresa || ''), // RUT EMPRESA
-      'AQ': toUpper(formData.nombreEmpresa || ''), // NOMBRE DE LA EMPRESA (SIN ESPACIOS, NI PUNTOS)
-      'AA': toUpper(formData.region), // REGION
-      'AR': toUpper(formData.comuna), // COMUNA
-      'AS': toUpper(formData.direccion), // DIRECCION
-      'AD': toUpper(formData.numeroContacto), // TELEFONO DE CONTACTO (SIN +56 NI ESPACIOS)
-      'AT': toUpper(formData.email), // EMAIL
-      'AU': toUpper(formData.selectedPlan), // PLAN
-      'AG': toUpper(formData.selectedAdicionales?.join(', ')), // ADICIONALES
-      'BA': rgu, // RGU
-      'AI': toUpper(formData.tipoCampana), // TIPO DE CAMPANA
-      'AJ': Array.isArray(formData.rutFrontalUrls) ? formData.rutFrontalUrls.join(', ') : '', // RUT (IMAGEN FRONTAL)
-      'AK': Array.isArray(formData.rutPosteriorUrls) ? formData.rutPosteriorUrls.join(', ') : '', // RUT (IMAGEN POSTERIOR)
-      'AL': Array.isArray(formData.factibilidadUrls) ? formData.factibilidadUrls.join(', ') : '', // FACTIBILIDAD ANDES
-      'AM': Array.isArray(formData.otrosDocumentosUrls) ? formData.otrosDocumentosUrls.join(', ') : '', // OTROS DOCUMENTOS
+      J: toUpper(formData.comentarioVendedor), // OBSERVACION VENDEDOR
+      K: toUpper(formData.selectedMarca), // MARCA
+      P: toUpper(formData.selectedCodigo), // CODIGO DE VENDEDOR (NOMBRE DE USUARIO USADO PARA VALIDAR)
+      Q: timestamp, // Marca temporal (formato DD/MM/YYYY HH:MM:SS - Hora Chile)
+      R: toUpper(formData.selectedTipoVenta), // TIPO VENTA
+      S: toUpper(formData.selectedSegmento), // SEGMENTO DE VENTA
+      T: toUpper(formData.tipoAgente), // AGENTE
+      BC: toUpper(formData.equipo), // EQUIPO
+      BE: toUpper(formData.selectedVendedor), // VENDEDOR
+      AN: toUpper(formData.rut), // RUT SOLICITANTE
+      AO: toUpper(`${formData.nombres} ${formData.apellidos}`), // NOMBRE SOLICITANTE
+      AP: toUpper(formData.rutEmpresa || ""), // RUT EMPRESA
+      AQ: toUpper(formData.nombreEmpresa || ""), // NOMBRE DE LA EMPRESA (SIN ESPACIOS, NI PUNTOS)
+      AA: toUpper(formData.region), // REGION
+      AR: toUpper(formData.comuna), // COMUNA
+      AS: toUpper(formData.direccion), // DIRECCION
+      AD: toUpper(formData.numeroContacto), // TELEFONO DE CONTACTO (SIN +56 NI ESPACIOS)
+      AT: toUpper(formData.email), // EMAIL
+      AU: toUpper(formData.selectedPlan), // PLAN
+      AG: toUpper(formData.selectedAdicionales?.join(", ")), // ADICIONALES
+      BA: rgu, // RGU
+      AI: toUpper(formData.tipoCampana), // TIPO DE CAMPANA
+      AJ: Array.isArray(formData.rutFrontalUrls)
+        ? formData.rutFrontalUrls.join(", ")
+        : "", // RUT (IMAGEN FRONTAL)
+      AK: Array.isArray(formData.rutPosteriorUrls)
+        ? formData.rutPosteriorUrls.join(", ")
+        : "", // RUT (IMAGEN POSTERIOR)
+      AL: Array.isArray(formData.factibilidadUrls)
+        ? formData.factibilidadUrls.join(", ")
+        : "", // FACTIBILIDAD ANDES
+      AM: Array.isArray(formData.otrosDocumentosUrls)
+        ? formData.otrosDocumentosUrls.join(", ")
+        : "", // OTROS DOCUMENTOS
     };
 
     // Obtener la última fila con datos en la columna Q (timestamp)
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: 'Fijo_EBSA!Q:Q',
+      range: "Fijo_EBSA!Q:Q",
     });
 
     const rows = response.data.values || [];
     const nextRow = rows.length + 1;
 
-    console.log(`Última fila con timestamp: ${rows.length}, próxima fila: ${nextRow}`);
+    console.log(
+      `Última fila con timestamp: ${rows.length}, próxima fila: ${nextRow}`
+    );
 
     // Obtener información del sheet
     const sheetMetadata = await sheets.spreadsheets.get({
@@ -213,32 +233,36 @@ export default async function handler(req, res) {
 
     // Buscar la pestaña "Fijo_EBSA"
     const fijoSheet = sheetMetadata.data.sheets.find(
-      sheet => sheet.properties.title === 'Fijo_EBSA'
+      (sheet) => sheet.properties.title === "Fijo_EBSA"
     );
 
     if (fijoSheet) {
       const currentRowCount = fijoSheet.properties.gridProperties.rowCount;
       const sheetId = fijoSheet.properties.sheetId;
 
-      console.log(`Filas totales en sheet: ${currentRowCount}, próxima fila a usar: ${nextRow}`);
+      console.log(
+        `Filas totales en sheet: ${currentRowCount}, próxima fila a usar: ${nextRow}`
+      );
 
       // SIEMPRE agregar una nueva fila antes de escribir para asegurar que existe
-      console.log('Agregando nueva fila al sheet...');
+      console.log("Agregando nueva fila al sheet...");
 
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: SPREADSHEET_ID,
         resource: {
-          requests: [{
-            appendDimension: {
-              sheetId: sheetId,
-              dimension: 'ROWS',
-              length: 1, // Agregar 1 fila
-            }
-          }]
-        }
+          requests: [
+            {
+              appendDimension: {
+                sheetId: sheetId,
+                dimension: "ROWS",
+                length: 1, // Agregar 1 fila
+              },
+            },
+          ],
+        },
       });
 
-      console.log('Nueva fila agregada exitosamente');
+      console.log("Nueva fila agregada exitosamente");
     }
 
     // Escribir cada valor en su columna correspondiente
@@ -251,12 +275,14 @@ export default async function handler(req, res) {
     await sheets.spreadsheets.values.batchUpdate({
       spreadsheetId: SPREADSHEET_ID,
       resource: {
-        valueInputOption: 'USER_ENTERED',
+        valueInputOption: "USER_ENTERED",
         data: updates,
       },
     });
 
-    console.log(`Formulario guardado exitosamente en Sheets con timestamp: ${timestamp}`);
+    console.log(
+      `Formulario guardado exitosamente en Sheets con timestamp: ${timestamp}`
+    );
 
     // Verificar si vendedor y código están en las listas de Supabase
     // Para convertir a null si no están en la lista
@@ -265,45 +291,53 @@ export default async function handler(req, res) {
     let equipoParaSupabase = null;
 
     // Verificar vendedor
-    if (formData.selectedVendedor && formData.selectedVendedor.trim() && formData.selectedVendedor !== ' ') {
+    if (
+      formData.selectedVendedor &&
+      formData.selectedVendedor.trim() &&
+      formData.selectedVendedor !== " "
+    ) {
       const { data: vendedorExists } = await supabase
-        .from('vendedores')
-        .select('id')
-        .ilike('nombre', formData.selectedVendedor)
+        .from("vendedores")
+        .select("id")
+        .ilike("nombre", formData.selectedVendedor)
         .single();
 
       if (vendedorExists) {
         vendedorParaSupabase = formData.selectedVendedor;
         equipoParaSupabase = formData.equipo;
-        console.log('Vendedor encontrado en lista');
+        console.log("Vendedor encontrado en lista");
       } else {
-        console.log('Vendedor no encontrado en lista, se guardará como null');
+        console.log("Vendedor no encontrado en lista, se guardará como null");
       }
     } else {
-      console.log('Vendedor vacío, se guardará como null');
+      console.log("Vendedor vacío, se guardará como null");
     }
 
     // Verificar código
-    if (formData.selectedCodigo && formData.selectedCodigo.trim() && formData.selectedCodigo !== ' ') {
+    if (
+      formData.selectedCodigo &&
+      formData.selectedCodigo.trim() &&
+      formData.selectedCodigo !== " "
+    ) {
       const { data: codigoExists } = await supabase
-        .from('codigos_vendedor')
-        .select('id')
-        .ilike('codigo', formData.selectedCodigo)
+        .from("codigos_vendedor")
+        .select("id")
+        .ilike("codigo", formData.selectedCodigo)
         .single();
 
       if (codigoExists) {
         codigoParaSupabase = formData.selectedCodigo;
-        console.log('Código encontrado en lista');
+        console.log("Código encontrado en lista");
       } else {
-        console.log('Código no encontrado en lista, se guardará como null');
+        console.log("Código no encontrado en lista, se guardará como null");
       }
     } else {
-      console.log('Código vacío, se guardará como null');
+      console.log("Código vacío, se guardará como null");
     }
 
     // Guardar en Supabase SIEMPRE (con null si valores no válidos)
     const { data: pedidoData, error: supabaseError } = await supabase
-      .from('pedidos')
+      .from("pedidos")
       .insert({
         observacion_vendedor: formData.comentarioVendedor,
         marca: formData.selectedMarca,
@@ -323,13 +357,29 @@ export default async function handler(req, res) {
         numero_telefono: formData.numeroContacto,
         email: formData.email,
         plan: formData.selectedPlan,
-        productos_adicionales: formData.selectedAdicionales?.join(', ') || null,
+        productos_adicionales: formData.selectedAdicionales?.join(", ") || null,
         rgu: rgu,
         tipo_campana: formData.tipoCampana,
-        rut_frontal_url: Array.isArray(formData.rutFrontalUrls) && formData.rutFrontalUrls.length > 0 ? formData.rutFrontalUrls.join(', ') : null,
-        rut_posterior_url: Array.isArray(formData.rutPosteriorUrls) && formData.rutPosteriorUrls.length > 0 ? formData.rutPosteriorUrls.join(', ') : null,
-        factibilidad_url: Array.isArray(formData.factibilidadUrls) && formData.factibilidadUrls.length > 0 ? formData.factibilidadUrls.join(', ') : null,
-        otros_documentos_urls: Array.isArray(formData.otrosDocumentosUrls) && formData.otrosDocumentosUrls.length > 0 ? formData.otrosDocumentosUrls.join(', ') : null,
+        rut_frontal_url:
+          Array.isArray(formData.rutFrontalUrls) &&
+          formData.rutFrontalUrls.length > 0
+            ? formData.rutFrontalUrls.join(", ")
+            : null,
+        rut_posterior_url:
+          Array.isArray(formData.rutPosteriorUrls) &&
+          formData.rutPosteriorUrls.length > 0
+            ? formData.rutPosteriorUrls.join(", ")
+            : null,
+        factibilidad_url:
+          Array.isArray(formData.factibilidadUrls) &&
+          formData.factibilidadUrls.length > 0
+            ? formData.factibilidadUrls.join(", ")
+            : null,
+        otros_documentos_urls:
+          Array.isArray(formData.otrosDocumentosUrls) &&
+          formData.otrosDocumentosUrls.length > 0
+            ? formData.otrosDocumentosUrls.join(", ")
+            : null,
         fila_sheets: nextRow,
       })
       .select()
@@ -337,28 +387,28 @@ export default async function handler(req, res) {
 
     let pedido = null;
     if (supabaseError) {
-      console.error('Error al guardar en Supabase:', supabaseError);
+      console.error("Error al guardar en Supabase:", supabaseError);
       // No fallar el request si Supabase falla, ya se guardó en Sheets
     } else {
       pedido = pedidoData;
-      console.log('Pedido guardado en Supabase con ID:', pedido.id);
+      console.log("Pedido guardado en Supabase con ID:", pedido.id);
     }
 
     res.status(200).json({
       success: true,
-      message: 'Formulario enviado exitosamente',
+      message: "Formulario enviado exitosamente",
       timestamp,
       pedidoId: pedido?.id,
     });
   } catch (error) {
-    console.error('Error al enviar formulario:', error);
-    console.error('Stack trace:', error.stack);
-    console.error('Datos recibidos:', JSON.stringify(req.body, null, 2));
+    console.error("Error al enviar formulario:", error);
+    console.error("Stack trace:", error.stack);
+    console.error("Datos recibidos:", JSON.stringify(req.body, null, 2));
     res.status(500).json({
       success: false,
-      message: 'Error al enviar formulario',
+      message: "Error al enviar formulario",
       error: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
     });
   }
 }
