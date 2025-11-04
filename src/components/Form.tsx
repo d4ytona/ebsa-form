@@ -361,7 +361,8 @@ export function Form({ user, onSignOut }: FormProps) {
       try {
         const { getEquipos } = await import('../lib/supabaseQueries');
         const equipos = await getEquipos();
-        const equipo = equipos.find(e => e.email === user.email.toLowerCase());
+        const userEmail = user.email; // Asignar a variable local para TypeScript
+        const equipo = equipos.find(e => e.email === userEmail.toLowerCase());
 
         if (equipo && equipo.nombre_equipo) {
           // Normalizar con primera letra mayúscula
