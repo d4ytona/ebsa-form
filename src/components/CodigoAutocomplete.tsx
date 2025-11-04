@@ -88,8 +88,12 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
   }
 
   const handleSelectCodigo = (codigo: CodigoVendedor) => {
-    setInputValue(codigo.codigo.toUpperCase())
-    onChange(codigo.codigo.toUpperCase())
+    // "otro" siempre en minúsculas, el resto en mayúsculas
+    const valorFinal = codigo.codigo.toLowerCase() === 'otro'
+      ? 'otro'
+      : codigo.codigo.toUpperCase()
+    setInputValue(valorFinal)
+    onChange(valorFinal)
     setShowSuggestions(false)
   }
 
@@ -103,8 +107,10 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
       setInputValue('')
       onChange('')
     } else {
-      // Normalizar el valor a mayúsculas
-      const normalizado = inputValue.toUpperCase()
+      // "otro" siempre en minúsculas, el resto en mayúsculas
+      const normalizado = inputValue.toLowerCase() === 'otro'
+        ? 'otro'
+        : inputValue.toUpperCase()
       setInputValue(normalizado)
       onChange(normalizado)
     }
@@ -148,7 +154,7 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
               }}
               className="px-4 py-2 cursor-pointer hover:bg-blue-50 transition"
             >
-              {codigo.codigo}
+              {codigo.codigo.toLowerCase() === 'otro' ? 'otro' : codigo.codigo.toUpperCase()}
             </div>
           ))}
         </div>

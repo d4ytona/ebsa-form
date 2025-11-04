@@ -109,12 +109,16 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
   }
 
   const handleSelectVendedor = (vendedor: Vendedor) => {
-    setInputValue(vendedor.nombre)
+    // "otro" siempre en minúsculas, los demás se normalizan
+    const nombreFinal = vendedor.nombre.toLowerCase() === 'otro'
+      ? 'otro'
+      : vendedor.nombre
+    setInputValue(nombreFinal)
     // Convertir tipo a formato esperado (capitalizado)
     const tipoContrato = vendedor.tipo === 'contratado' ? 'Contratado' : 'Honorario'
     // Normalizar nombreEquipo con primera letra mayúscula
     const nombreEquipoNormalizado = toDisplayFormat(nombreEquipo)
-    onChange(vendedor.nombre, tipoContrato, supervisor, nombreEquipoNormalizado)
+    onChange(nombreFinal, tipoContrato, supervisor, nombreEquipoNormalizado)
     setShowSuggestions(false)
   }
 
@@ -131,8 +135,10 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
       setInputValue('')
       onChange('', null, supervisor, nombreEquipoNormalizado)
     } else {
-      // Normalizar el valor
-      const normalizado = toDisplayFormat(inputValue)
+      // "otro" siempre en minúsculas, el resto se normaliza
+      const normalizado = inputValue.toLowerCase() === 'otro'
+        ? 'otro'
+        : toDisplayFormat(inputValue)
       setInputValue(normalizado)
       // Si no está en la lista, enviar con tipo null (para que no se guarde en Supabase)
       const vendedorEnLista = vendedores.find(v => v.nombre.toLowerCase() === inputValue.toLowerCase())
@@ -155,7 +161,7 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
       {/* Input de búsqueda */}
       <input
         type="text"
-        value={toDisplayFormat(inputValue)}
+        value={inputValue.toLowerCase() === 'otro' ? 'otro' : toDisplayFormat(inputValue)}
         onChange={(e) => handleInputChange(e.target.value)}
         onFocus={() => setShowSuggestions(true)}
         onBlur={handleBlur}
@@ -180,7 +186,7 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
               }}
               className="px-4 py-2 cursor-pointer hover:bg-blue-50 transition"
             >
-              {toDisplayFormat(vendedor.nombre)}
+              {vendedor.nombre.toLowerCase() === 'otro' ? 'otro' : toDisplayFormat(vendedor.nombre)}
             </div>
           ))}
         </div>
@@ -199,7 +205,7 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
           {value.trim() === '' ? (
             <>Seleccionado: <span className="font-semibold">Vacío</span></>
           ) : (
-            <>Seleccionado: <span className="font-semibold">{toDisplayFormat(value)}</span></>
+            <>Seleccionado: <span className="font-semibold">{value.toLowerCase() === 'otro' ? 'otro' : toDisplayFormat(value)}</span></>
           )}
         </p>
       )}
