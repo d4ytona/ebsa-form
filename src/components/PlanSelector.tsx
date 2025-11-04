@@ -271,7 +271,7 @@ export function PlanSelector({
       // Si tiene descuento nacional, crear versión con ese descuento
       if (tieneDescuentoNacional) {
         planesExpandidos.push(convertirPlan(
-          `${planDB.nombre} (Descuento Nacional)`,
+          `${planDB.nombre} (Valor Nacional)`,
           planDB.descuento_nacional!,
           null
         ))
@@ -280,7 +280,7 @@ export function PlanSelector({
       // Si tiene descuento especial, crear versión con ese descuento
       if (tieneDescuentoEspecial) {
         planesExpandidos.push(convertirPlan(
-          `${planDB.nombre} (Descuento Especial)`,
+          `${planDB.nombre} (Oferta Táctica)`,
           0,
           planDB.descuento_especial
         ))
@@ -338,12 +338,16 @@ export function PlanSelector({
         Planes Disponibles ({planesDisponibles.length})
       </label>
       <div className="space-y-3">
-        {planesDisponibles.map((plan, index) => (
+        {planesDisponibles.map((plan, index) => {
+          const isOfertaTactica = plan.descuento_especial !== null && plan.descuento_especial > 0
+          return (
           <label
             key={index}
             className={`block p-4 border-2 rounded-lg cursor-pointer transition ${
               selectedPlan === plan.nombre
                 ? 'border-blue-500 bg-blue-50'
+                : isOfertaTactica
+                ? 'border-purple-600 hover:bg-purple-50'
                 : 'border-gray-300 hover:bg-gray-50'
             }`}
           >
@@ -414,7 +418,8 @@ export function PlanSelector({
               </div>
             </div>
           </label>
-        ))}
+          )
+        })}
       </div>
     </div>
   );
