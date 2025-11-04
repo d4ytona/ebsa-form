@@ -22,11 +22,11 @@ const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
 
 /**
  * Cliente de Supabase para almacenar pedidos
- * Usa variables sin VITE_ porque esto corre en el backend de Vercel
+ * Usa las mismas variables que el frontend (con VITE_) para evitar duplicación
  */
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
+  process.env.VITE_SUPABASE_URL,
+  process.env.VITE_SUPABASE_ANON_KEY
 );
 
 /**
