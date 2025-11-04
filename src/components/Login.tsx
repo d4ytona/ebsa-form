@@ -78,7 +78,16 @@ export function Login() {
           .eq('codigo_usuario', emailOrCode.trim())
           .single();
 
-        if (queryError || !equipo) {
+        console.log('📊 Resultado de búsqueda:', { equipo, queryError });
+
+        if (queryError) {
+          console.error('❌ Error en query:', queryError);
+          setLoading(false);
+          setError(`Error al buscar código: ${queryError.message}`);
+          return;
+        }
+
+        if (!equipo) {
           setLoading(false);
           setError('Código de usuario no válido');
           return;
