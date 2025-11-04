@@ -112,30 +112,37 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
     setInputValue(vendedor.nombre)
     // Convertir tipo a formato esperado (capitalizado)
     const tipoContrato = vendedor.tipo === 'contratado' ? 'Contratado' : 'Honorario'
-    onChange(vendedor.nombre, tipoContrato, supervisor, nombreEquipo)
+    // Normalizar nombreEquipo con primera letra mayúscula
+    const nombreEquipoNormalizado = toDisplayFormat(nombreEquipo)
+    onChange(vendedor.nombre, tipoContrato, supervisor, nombreEquipoNormalizado)
     setShowSuggestions(false)
   }
 
   // Manejar cuando se pierde el foco (normalizar entrada manual)
   const handleBlur = () => {
     setShowSuggestions(false)
-    // Normalizar el valor si no está vacío
-    if (inputValue.trim()) {
+
+    // Normalizar nombreEquipo con primera letra mayúscula
+    const nombreEquipoNormalizado = toDisplayFormat(nombreEquipo)
+
+    // Si el input está vacío o solo tiene espacios en blanco
+    if (inputValue.trim() === '') {
+      // Permitir valor vacío para ventas sin vendedor (mostrar como "Vacío")
+      setInputValue('')
+      onChange('', null, supervisor, nombreEquipoNormalizado)
+    } else {
+      // Normalizar el valor
       const normalizado = toDisplayFormat(inputValue)
       setInputValue(normalizado)
       // Si no está en la lista, enviar con tipo null (para que no se guarde en Supabase)
       const vendedorEnLista = vendedores.find(v => v.nombre.toLowerCase() === inputValue.toLowerCase())
       if (vendedorEnLista) {
         const tipoContrato = vendedorEnLista.tipo === 'contratado' ? 'Contratado' : 'Honorario'
-        onChange(normalizado, tipoContrato, supervisor, nombreEquipo)
+        onChange(normalizado, tipoContrato, supervisor, nombreEquipoNormalizado)
       } else {
         // Entrada manual: enviar con null para que no se guarde en Supabase
-        onChange(normalizado, null, supervisor, nombreEquipo)
+        onChange(normalizado, null, supervisor, nombreEquipoNormalizado)
       }
-    } else if (inputValue === ' ' || inputValue.trim() === '') {
-      // Permitir espacio en blanco para ventas sin vendedor
-      setInputValue(' ')
-      onChange(' ', null, supervisor, nombreEquipo)
     }
   }
 
@@ -183,6 +190,17 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
       {!loading && vendedores.length === 0 && (
         <p className="mt-2 text-sm text-red-600">
           No hay vendedores registrados para este equipo
+        </p>
+      )}
+
+      {/* Mostrar la selección actual */}
+      {value !== undefined && value !== null && (
+        <p className="mt-2 text-sm text-gray-600">
+          {value.trim() === '' ? (
+            <>Seleccionado: <span className="font-semibold">Vacío</span></>
+          ) : (
+            <>Seleccionado: <span className="font-semibold">{toDisplayFormat(value)}</span></>
+          )}
         </p>
       )}
 

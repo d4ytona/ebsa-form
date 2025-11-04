@@ -346,16 +346,17 @@ export async function isFeriado(fecha: string): Promise<boolean> {
 }
 
 /**
- * Obtiene todos los tipos de campaña activos
+ * Obtiene todos los tipos de campaña
+ * NOTA: tipo_campana es un tipo ENUM en PostgreSQL, no una tabla
+ * Los valores se retornan hardcodeados basados en el tipo ENUM
  */
 export async function getTiposCampana(): Promise<TipoCampana[]> {
-  const { data, error} = await supabase
-    .from('tipos_campana_active')
-    .select('*')
-    .order('id')
-
-  if (error) throw error
-  return data || []
+  // Tipos de campaña definidos en el ENUM tipo_campana
+  return [
+    { id: 'terreno', nombre: 'Terreno' },
+    { id: 'contacto', nombre: 'Contacto' },
+    { id: 'publicidad', nombre: 'Publicidad' }
+  ]
 }
 
 // =============================================

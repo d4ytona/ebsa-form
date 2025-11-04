@@ -96,12 +96,14 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
   // Manejar cuando se pierde el foco (normalizar)
   const handleBlur = () => {
     setShowSuggestions(false)
-    // Permitir espacio en blanco o normalizar
-    if (inputValue.trim() === '' && inputValue.length > 0) {
-      // Espacio en blanco para ventas sin código
-      setInputValue(' ')
-      onChange(' ')
-    } else if (inputValue.trim()) {
+
+    // Si el input está vacío o solo tiene espacios en blanco
+    if (inputValue.trim() === '') {
+      // Permitir valor vacío para ventas sin código (mostrar como "Vacío")
+      setInputValue('')
+      onChange('')
+    } else {
+      // Normalizar el valor a mayúsculas
       const normalizado = inputValue.toUpperCase()
       setInputValue(normalizado)
       onChange(normalizado)
@@ -153,9 +155,13 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
       )}
 
       {/* Mostrar el código ingresado/seleccionado */}
-      {value && (
+      {value !== undefined && value !== null && (
         <p className="mt-2 text-sm text-gray-600">
-          Código ingresado: <span className="font-semibold">{value}</span>
+          {value.trim() === '' ? (
+            <>Seleccionado: <span className="font-semibold">Vacío</span></>
+          ) : (
+            <>Seleccionado: <span className="font-semibold">{value}</span></>
+          )}
         </p>
       )}
 
