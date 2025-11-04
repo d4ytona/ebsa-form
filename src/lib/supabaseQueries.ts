@@ -346,17 +346,42 @@ export async function isFeriado(fecha: string): Promise<boolean> {
 }
 
 /**
- * Obtiene todos los tipos de campaña
+ * Obtiene todos los tipos de campaña desde el ENUM de PostgreSQL
  * NOTA: tipo_campana es un tipo ENUM en PostgreSQL, no una tabla
- * Los valores se retornan hardcodeados basados en el tipo ENUM
+ * Esta función extrae dinámicamente todos los valores del ENUM
  */
 export async function getTiposCampana(): Promise<TipoCampana[]> {
-  // Tipos de campaña definidos en el ENUM tipo_campana
-  return [
-    { id: 'terreno', nombre: 'Terreno' },
-    { id: 'contacto', nombre: 'Contacto' },
-    { id: 'publicidad', nombre: 'Publicidad' }
-  ]
+  try {
+    // Query para obtener todos los valores del ENUM tipo_campana
+    const { data, error } = await supabase.rpc('get_enum_values', {
+      enum_name: 'tipo_campana'
+    })
+
+    if (error) {
+      console.error('Error obteniendo tipos de campaña:', error)
+      // Fallback a valores por defecto si falla el RPC
+      return [
+        { id: 'terreno', nombre: 'Terreno' },
+        { id: 'contacto', nombre: 'Contacto' },
+        { id: 'publicidad', nombre: 'Publicidad' }
+      ]
+    }
+
+    // Convertir los valores del ENUM a formato { id, nombre }
+    // Capitalizar primera letra para el nombre
+    return (data || []).map((valor: string) => ({
+      id: valor,
+      nombre: valor.charAt(0).toUpperCase() + valor.slice(1)
+    }))
+  } catch (error) {
+    console.error('Error en getTiposCampana:', error)
+    // Fallback en caso de error
+    return [
+      { id: 'terreno', nombre: 'Terreno' },
+      { id: 'contacto', nombre: 'Contacto' },
+      { id: 'publicidad', nombre: 'Publicidad' }
+    ]
+  }
 }
 
 // =============================================

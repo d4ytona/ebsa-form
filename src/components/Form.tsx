@@ -353,6 +353,35 @@ export function Form({ user, onSignOut }: FormProps) {
     }
   }, []);
 
+  // Cargar nombreEquipo basándose en el email del usuario al montar
+  useEffect(() => {
+    async function fetchNombreEquipo() {
+      if (!user?.email) return;
+
+      try {
+        const { getEquipos } = await import('../lib/supabaseQueries');
+        const equipos = await getEquipos();
+        const equipo = equipos.find(e => e.email === user.email.toLowerCase());
+
+        if (equipo && equipo.nombre_equipo) {
+          // Normalizar con primera letra mayúscula
+          const nombreNormalizado = equipo.nombre_equipo
+            .split(' ')
+            .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+
+          // Solo setear si aún no hay nombreEquipo (no sobreescribir datos guardados)
+          setNombreEquipo(prev => prev || nombreNormalizado);
+          setSupervisor(prev => prev || equipo.supervisor);
+        }
+      } catch (error) {
+        console.error('Error cargando nombre del equipo:', error);
+      }
+    }
+
+    fetchNombreEquipo();
+  }, [user?.email]);
+
   // Guardar en localStorage cada vez que cambian los datos
   useEffect(() => {
     const formData = {
