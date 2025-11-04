@@ -65,6 +65,13 @@ export function TipoVentaSelector({ value, onChange }: TipoVentaSelectorProps) {
           </label>
         ))}
       </div>
+
+      {/* Mostrar la selección actual */}
+      {value && (
+        <p className="mt-4 text-sm text-gray-600">
+          Seleccionado: <span className="font-semibold">{tiposVenta.find(t => t.id === value)?.nombre}</span>
+        </p>
+      )}
     </div>
   )
 }

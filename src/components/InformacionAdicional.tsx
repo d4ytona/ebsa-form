@@ -5,26 +5,13 @@
  * validación de feriados. Es la última sección del formulario antes de finalizar.
  */
 
-import { useMemo, useState } from "react";
-import tramosData from "../data/tramos_horarios.json";
+import { useMemo, useState, useEffect } from "react";
+import { getTramosHorarios, type TramoHorario } from "../lib/supabaseQueries";
 import { validateAddress, formatAddress, errorMessages } from "../utils/validators";
 import { TipoCampanaSelector } from "./TipoCampanaSelector";
 import { FechaAgendamientoSelector } from "./FechaAgendamientoSelector";
 import { FileUpload } from "./FileUpload";
 
-/**
- * @interface Tramo
- * @description Estructura de un tramo horario de instalación.
- *
- * @property {string} id - Identificador del tramo (ej: "am", "pm")
- * @property {string} inicio - Hora de inicio del tramo (formato HH:mm)
- * @property {string} fin - Hora de fin del tramo (formato HH:mm)
- */
-interface Tramo {
-  id: string;
-  inicio: string;
-  fin: string;
-}
 
 /**
  * @interface InformacionAdicionalProps
@@ -169,6 +156,25 @@ export function InformacionAdicional({
 }: InformacionAdicionalProps) {
   // Estado para error de comentario
   const [comentarioError, setComentarioError] = useState('');
+  // Estado para tramos horarios desde Supabase
+  const [tramosData, setTramosData] = useState<TramoHorario[]>([]);
+  const [loadingTramos, setLoadingTramos] = useState(true);
+
+  // Cargar tramos horarios desde Supabase
+  useEffect(() => {
+    async function fetchTramos() {
+      try {
+        const data = await getTramosHorarios();
+        setTramosData(data);
+      } catch (error) {
+        console.error('Error cargando tramos horarios:', error);
+        setTramosData([]);
+      } finally {
+        setLoadingTramos(false);
+      }
+    }
+    fetchTramos();
+  }, []);
 
   // Obtener fecha y hora actual
   const ahora = new Date();
@@ -197,22 +203,21 @@ export function InformacionAdicional({
 
   // Determinar qué tramos están disponibles según la fecha y hora
   const tramosDisponibles = useMemo(() => {
-    const tramos: Tramo[] = tramosData;
     const fechaSeleccionada = fechaAgendamiento || fechaMinima;
     const esHoy = fechaSeleccionada === ahora.toISOString().split('T')[0];
 
     if (!esHoy) {
       // Si no es hoy, todos los tramos están disponibles
-      return tramos;
+      return tramosData;
     }
 
     // Si es hoy, filtrar tramos según la hora actual
-    return tramos.filter((tramo) => {
+    return tramosData.filter((tramo) => {
       const [horaFin] = tramo.fin.split(':').map(Number);
       // El tramo está disponible si su hora de fin aún no ha pasado
       return horaFin > horaActual;
     });
-  }, [fechaAgendamiento, fechaMinima, horaActual]);
+  }, [fechaAgendamiento, fechaMinima, horaActual, tramosData]);
 
   return (
     <div className="mb-8 border-2 border-gray-200 rounded-lg">
@@ -249,7 +254,9 @@ export function InformacionAdicional({
             <label className="block text-gray-700 font-semibold mb-3">
               Tramo de Instalación
             </label>
-            {tramosDisponibles.length === 0 ? (
+            {loadingTramos ? (
+              <p className="text-sm text-gray-500">Cargando tramos horarios...</p>
+            ) : tramosDisponibles.length === 0 ? (
               <p className="text-gray-600 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-lg">
                 No hay tramos disponibles para hoy. Por favor selecciona otra fecha.
               </p>

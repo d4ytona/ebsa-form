@@ -167,7 +167,10 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
           {filteredVendedores.map((vendedor) => (
             <div
               key={vendedor.id}
-              onClick={() => handleSelectVendedor(vendedor)}
+              onMouseDown={(e) => {
+                e.preventDefault(); // Prevenir que onBlur se ejecute primero
+                handleSelectVendedor(vendedor);
+              }}
               className="px-4 py-2 cursor-pointer hover:bg-blue-50 transition"
             >
               {toDisplayFormat(vendedor.nombre)}

@@ -1,9 +1,7 @@
 /**
  * @fileoverview Componente de selección de marca mediante radio buttons.
- * Muestra marcas disponibles según el distribuidor seleccionado.
+ * Muestra marcas disponibles (VTR y Claro).
  */
-
-import distribuidoresData from '../data/distribuidores.json'
 
 /**
  * Props para el componente MarcaSelector.
@@ -18,24 +16,17 @@ interface MarcaSelectorProps {
 
 /**
  * Componente de selección de marca con radio buttons.
- * Filtra y muestra las marcas disponibles según el distribuidor seleccionado.
- * Se oculta automáticamente si el distribuidor tiene una sola marca.
+ * Muestra las marcas VTR y Claro disponibles.
  *
  * @component
  * @param {MarcaSelectorProps} props - Props del componente
- * @returns {JSX.Element | null} Lista de radio buttons para seleccionar marca, o null si no aplica
+ * @returns {JSX.Element} Lista de radio buttons para seleccionar marca
  *
  * @example
  * <MarcaSelector
- *   distribuidorId={distribuidorSeleccionado}
  *   value={marcaSeleccionada}
  *   onChange={setMarca}
  * />
- *
- * @description
- * El componente carga las marcas desde distribuidores.json y las filtra según
- * el distribuidor seleccionado. Si un distribuidor solo tiene una marca, el
- * componente retorna null y no se muestra en la interfaz.
  */
 export function MarcaSelector({ value, onChange }: MarcaSelectorProps) {
   // Marcas disponibles (VTR y Claro)

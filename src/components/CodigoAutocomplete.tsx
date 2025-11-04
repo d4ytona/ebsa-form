@@ -140,7 +140,10 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
           {filteredCodigos.map((codigo) => (
             <div
               key={codigo.id}
-              onClick={() => handleSelectCodigo(codigo)}
+              onMouseDown={(e) => {
+                e.preventDefault(); // Prevenir que onBlur se ejecute primero
+                handleSelectCodigo(codigo);
+              }}
               className="px-4 py-2 cursor-pointer hover:bg-blue-50 transition"
             >
               {codigo.codigo}

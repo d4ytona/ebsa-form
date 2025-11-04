@@ -103,6 +103,11 @@ export interface Feriado {
   nombre: string | null
 }
 
+export interface TipoCampana {
+  id: string
+  nombre: string
+}
+
 // =============================================
 // QUERIES - REGIONES Y COMUNAS
 // =============================================
@@ -338,6 +343,19 @@ export async function isFeriado(fecha: string): Promise<boolean> {
 
   if (error && error.code !== 'PGRST116') throw error // PGRST116 = no rows
   return !!data
+}
+
+/**
+ * Obtiene todos los tipos de campaña activos
+ */
+export async function getTiposCampana(): Promise<TipoCampana[]> {
+  const { data, error} = await supabase
+    .from('tipos_campana_active')
+    .select('*')
+    .order('id')
+
+  if (error) throw error
+  return data || []
 }
 
 // =============================================

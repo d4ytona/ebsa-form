@@ -65,6 +65,13 @@ export function TipoAgenteSelector({ value, onChange }: TipoAgenteSelectorProps)
           </label>
         ))}
       </div>
+
+      {/* Mostrar la selección actual */}
+      {value && (
+        <p className="mt-4 text-sm text-gray-600">
+          Seleccionado: <span className="font-semibold">{tipos.find(t => t.id === value)?.nombre}</span>
+        </p>
+      )}
     </div>
   )
 }

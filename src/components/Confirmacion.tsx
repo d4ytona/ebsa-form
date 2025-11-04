@@ -5,7 +5,7 @@
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import tramosData from "../data/tramos_horarios.json";
+import { getTramosHorarios, type TramoHorario } from "../lib/supabaseQueries";
 
 /**
  * @interface FormData
@@ -154,12 +154,25 @@ export function Confirmacion() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [tramosData, setTramosData] = useState<TramoHorario[]>([]);
 
   useEffect(() => {
     // Si no hay datos, redirigir al formulario
     if (!formData) {
       navigate("/");
     }
+
+    // Cargar tramos horarios desde Supabase
+    async function fetchTramos() {
+      try {
+        const data = await getTramosHorarios();
+        setTramosData(data);
+      } catch (error) {
+        console.error('Error cargando tramos horarios:', error);
+        setTramosData([]);
+      }
+    }
+    fetchTramos();
   }, [formData, navigate]);
 
   if (!formData) {

@@ -65,6 +65,13 @@ export function SegmentoSelector({ value, onChange }: SegmentoSelectorProps) {
           </label>
         ))}
       </div>
+
+      {/* Mostrar la selección actual */}
+      {value && (
+        <p className="mt-4 text-sm text-gray-600">
+          Seleccionado: <span className="font-semibold">{segmentos.find(s => s.id === value)?.nombre}</span>
+        </p>
+      )}
     </div>
   )
 }

@@ -1,9 +1,10 @@
 /**
  * @fileoverview Componente de selección de tipo de campaña mediante radio buttons.
- * Carga las opciones desde tipos_campana.json.
+ * Carga las opciones desde Supabase.
  */
 
-import tiposCampanaData from '../data/tipos_campana.json'
+import { useState, useEffect } from 'react'
+import { getTiposCampana, type TipoCampana } from '../lib/supabaseQueries'
 
 /**
  * Props para el componente TipoCampanaSelector.
@@ -18,7 +19,7 @@ interface TipoCampanaSelectorProps {
 
 /**
  * Componente de selección de tipo de campaña con radio buttons.
- * Muestra las opciones de campañas disponibles cargadas desde un archivo JSON.
+ * Muestra las opciones de campañas disponibles cargadas desde Supabase.
  *
  * @component
  * @param {TipoCampanaSelectorProps} props - Props del componente
@@ -31,10 +32,39 @@ interface TipoCampanaSelectorProps {
  * />
  *
  * @description
- * Las opciones de campaña se cargan dinámicamente desde data/tipos_campana.json.
+ * Las opciones de campaña se cargan dinámicamente desde la base de datos Supabase.
  * Cada tipo de campaña puede tener diferentes configuraciones y requisitos.
  */
 export function TipoCampanaSelector({ value, onChange }: TipoCampanaSelectorProps) {
+  const [tiposCampana, setTiposCampana] = useState<TipoCampana[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchTiposCampana() {
+      try {
+        const data = await getTiposCampana()
+        setTiposCampana(data)
+      } catch (error) {
+        console.error('Error cargando tipos de campaña:', error)
+        setTiposCampana([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTiposCampana()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="mb-6">
+        <label className="block text-gray-700 font-semibold mb-3">
+          Tipo de Campaña
+        </label>
+        <p className="text-sm text-gray-500">Cargando tipos de campaña...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="mb-6">
       <label className="block text-gray-700 font-semibold mb-3">
@@ -42,7 +72,7 @@ export function TipoCampanaSelector({ value, onChange }: TipoCampanaSelectorProp
       </label>
 
       <div className="space-y-3">
-        {tiposCampanaData.map((tipo) => (
+        {tiposCampana.map((tipo) => (
           <label
             key={tipo.id}
             className="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition"
@@ -61,6 +91,13 @@ export function TipoCampanaSelector({ value, onChange }: TipoCampanaSelectorProp
           </label>
         ))}
       </div>
+
+      {/* Mostrar la selección actual */}
+      {value && (
+        <p className="mt-4 text-sm text-gray-600">
+          Seleccionado: <span className="font-semibold">{tiposCampana.find(t => t.id === value)?.nombre}</span>
+        </p>
+      )}
     </div>
   )
 }
