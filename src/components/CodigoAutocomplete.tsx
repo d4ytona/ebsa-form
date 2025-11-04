@@ -78,8 +78,8 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
   )
 
   const handleInputChange = (newValue: string) => {
-    // SIEMPRE permitir entrada manual: solo letras y convertir a mayúsculas
-    const soloLetras = newValue.replace(/[^a-zA-Z\s]/g, '').toUpperCase()
+    // SIEMPRE permitir entrada manual: solo letras, mantener como está escrito
+    const soloLetras = newValue.replace(/[^a-zA-Z\s]/g, '')
     setInputValue(soloLetras)
     // Mostrar sugerencias si hay códigos disponibles
     if (codigos.length > 0) {
@@ -88,10 +88,10 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
   }
 
   const handleSelectCodigo = (codigo: CodigoVendedor) => {
-    // "otro" siempre en minúsculas, el resto en mayúsculas
+    // "otro" siempre en minúsculas, el resto como viene de la BD
     const valorFinal = codigo.codigo.toLowerCase() === 'otro'
       ? 'otro'
-      : codigo.codigo.toUpperCase()
+      : codigo.codigo
     setInputValue(valorFinal)
     onChange(valorFinal)
     setShowSuggestions(false)
@@ -107,10 +107,10 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
       setInputValue('')
       onChange('')
     } else {
-      // "otro" siempre en minúsculas, el resto en mayúsculas
+      // "otro" siempre en minúsculas, el resto como está
       const normalizado = inputValue.toLowerCase() === 'otro'
         ? 'otro'
-        : inputValue.toUpperCase()
+        : inputValue
       setInputValue(normalizado)
       onChange(normalizado)
     }
@@ -119,7 +119,7 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
   return (
     <div className="mb-6 relative">
       <label className="block text-gray-700 font-semibold mb-2">
-        Código <span className="text-sm text-gray-500">(solo letras, mayúsculas)</span>
+        Código <span className="text-sm text-gray-500">(solo letras)</span>
       </label>
 
       {/* Input - SIEMPRE permite entrada manual */}
@@ -154,7 +154,7 @@ export function CodigoAutocomplete({ value, onChange, userEmail }: CodigoAutocom
               }}
               className="px-4 py-2 cursor-pointer hover:bg-blue-50 transition"
             >
-              {codigo.codigo.toLowerCase() === 'otro' ? 'otro' : codigo.codigo.toUpperCase()}
+              {codigo.codigo.toLowerCase() === 'otro' ? 'otro' : codigo.codigo}
             </div>
           ))}
         </div>
