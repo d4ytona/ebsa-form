@@ -388,6 +388,15 @@ export default async function handler(req, res) {
     let pedido = null;
 
     if (testMode !== "sheets") {
+      console.log("=== Intentando guardar en Supabase ===");
+      console.log("Datos a insertar:", {
+        vendedor: vendedorParaSupabase,
+        codigo: codigoParaSupabase,
+        equipo: equipoParaSupabase,
+        rut: formData.rut,
+        marca: formData.selectedMarca
+      });
+
       // Guardar en Supabase (con null si valores no válidos)
       const { data: pedidoData, error: supabaseError } = await supabase
       .from("pedidos")
@@ -439,11 +448,16 @@ export default async function handler(req, res) {
         .single();
 
       if (supabaseError) {
-        console.error("Error al guardar en Supabase:", supabaseError);
+        console.error("=== ERROR AL GUARDAR EN SUPABASE ===");
+        console.error("Error completo:", JSON.stringify(supabaseError, null, 2));
+        console.error("Error code:", supabaseError.code);
+        console.error("Error message:", supabaseError.message);
+        console.error("Error details:", supabaseError.details);
+        console.error("Error hint:", supabaseError.hint);
         // No fallar el request si Supabase falla, ya se guardó en Sheets
       } else {
         pedido = pedidoData;
-        console.log("Pedido guardado en Supabase con ID:", pedido.id);
+        console.log("✅ Pedido guardado en Supabase con ID:", pedido.id);
       }
     } else {
       console.log("TEST MODE: Saltando guardado en Supabase");
