@@ -196,6 +196,9 @@ export default async function handler(req, res) {
     // Función helper para convertir a mayúsculas
     const toUpper = (str) => (str ? String(str).toUpperCase() : "");
 
+    // Función helper para convertir a minúsculas
+    const toLower = (str) => (str ? String(str).toLowerCase() : "");
+
     // Calcular RGU (cantidad de servicios)
     const rgu = [
       formData.hasInternet,
@@ -212,7 +215,7 @@ export default async function handler(req, res) {
       R: toUpper(formData.selectedTipoVenta), // TIPO VENTA
       S: toUpper(formData.selectedSegmento), // SEGMENTO DE VENTA
       T: toUpper(formData.tipoAgente), // AGENTE
-      BC: toUpper(formData.equipo), // EQUIPO
+      BC: toLower(formData.emailEquipo), // EQUIPO (email del equipo en minúsculas)
       BE: toUpper(formData.selectedVendedor), // VENDEDOR
       AN: toUpper(formData.rut), // RUT SOLICITANTE
       AO: toUpper(`${formData.nombres} ${formData.apellidos}`), // NOMBRE SOLICITANTE
@@ -222,7 +225,7 @@ export default async function handler(req, res) {
       AR: toUpper(formData.comuna), // COMUNA
       AS: toUpper(formData.direccion), // DIRECCION
       AD: toUpper(formData.numeroContacto), // TELEFONO DE CONTACTO (SIN +56 NI ESPACIOS)
-      AT: toUpper(formData.email), // EMAIL
+      AT: toLower(formData.email), // EMAIL (en minúsculas)
       AU: toUpper(formData.selectedPlan), // PLAN
       AG: toUpper(formData.selectedAdicionales?.join(", ")), // ADICIONALES
       BA: rgu, // RGU

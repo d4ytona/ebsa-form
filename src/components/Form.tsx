@@ -611,8 +611,10 @@ export function Form({ user, onSignOut }: FormProps) {
       tramoInstalacion,
       tipoCampana,
       comentarioVendedor,
-      // Nombre del equipo obtenido desde Supabase
+      // Nombre del equipo obtenido desde Supabase (solo para mostrar en UI)
       equipo: nombreEquipo,
+      // Email del equipo (del usuario logueado, para enviar a Sheets)
+      emailEquipo: user?.email || '',
     };
 
     // Navegar a la página de confirmación con los datos
