@@ -255,7 +255,6 @@ export function Form({ user, onSignOut }: FormProps) {
 
   // Estados para Información General
   const [selectedVendedor, setSelectedVendedor] = useState("");
-  const [supervisor, setSupervisor] = useState("");
   const [nombreEquipo, setNombreEquipo] = useState("");
   const [tipoContratoVendedor, setTipoContratoVendedor] = useState<string | null>(null);
   const [selectedTipoAgente, setSelectedTipoAgente] = useState("");
@@ -316,7 +315,6 @@ export function Form({ user, onSignOut }: FormProps) {
     if (saved) {
       const data = JSON.parse(saved);
       setSelectedVendedor(data.selectedVendedor || "");
-      setSupervisor(data.supervisor || "");
       setNombreEquipo(data.nombreEquipo || "");
       setTipoContratoVendedor(data.tipoContratoVendedor || null);
       setSelectedTipoAgente(data.selectedTipoAgente || "");
@@ -373,7 +371,6 @@ export function Form({ user, onSignOut }: FormProps) {
 
           // Solo setear si aún no hay nombreEquipo (no sobreescribir datos guardados)
           setNombreEquipo(prev => prev || nombreNormalizado);
-          setSupervisor(prev => prev || equipo.supervisor);
         }
       } catch (error) {
         console.error('Error cargando nombre del equipo:', error);
@@ -387,7 +384,6 @@ export function Form({ user, onSignOut }: FormProps) {
   useEffect(() => {
     const formData = {
       selectedVendedor,
-      supervisor,
       nombreEquipo,
       tipoContratoVendedor,
       selectedTipoAgente,
@@ -425,7 +421,6 @@ export function Form({ user, onSignOut }: FormProps) {
     localStorage.setItem("ebsa-form-data", JSON.stringify(formData));
   }, [
     selectedVendedor,
-    supervisor,
     nombreEquipo,
     tipoContratoVendedor,
     selectedTipoAgente,
@@ -553,12 +548,11 @@ export function Form({ user, onSignOut }: FormProps) {
    *
    * @param {string} vendedor - Nombre del vendedor seleccionado
    * @param {string | null} tipoContrato - Tipo de contrato del vendedor (puede ser null si no tiene asignado)
-   * @param {string} supervisorValue - Nombre del supervisor asociado al vendedor
+   * @param {string} equipo - Nombre del equipo asociado al vendedor
    */
-  const handleVendedorChange = (vendedor: string, tipoContrato: string | null, supervisorValue: string, equipo: string) => {
+  const handleVendedorChange = (vendedor: string, tipoContrato: string | null, equipo: string) => {
     setSelectedVendedor(vendedor);
     setTipoContratoVendedor(tipoContrato);
-    setSupervisor(supervisorValue);
     setNombreEquipo(equipo);
     // Si el tipo de contrato no es null, limpiar la selección manual de tipo de agente
     if (tipoContrato !== null) {
@@ -575,7 +569,6 @@ export function Form({ user, onSignOut }: FormProps) {
     // Preparar los datos del formulario
     const formData = {
       selectedVendedor,
-      supervisor,
       tipoAgente: tipoContratoVendedor || selectedTipoAgente,
       selectedMarca,
       selectedCodigo,

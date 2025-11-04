@@ -17,8 +17,8 @@ interface VendedorAutocompleteProps {
   /** Nombre del vendedor seleccionado */
   value: string
   /** Callback que se ejecuta al seleccionar un vendedor.
-   * Retorna: vendedor, tipo de contrato, supervisor y nombre del equipo */
-  onChange: (value: string, tipoContrato: string | null, supervisor: string, nombreEquipo: string) => void
+   * Retorna: vendedor, tipo de contrato y nombre del equipo */
+  onChange: (value: string, tipoContrato: string | null, nombreEquipo: string) => void
 }
 
 /**
@@ -53,7 +53,6 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [vendedores, setVendedores] = useState<Vendedor[]>([])
   const [loading, setLoading] = useState(true)
-  const [supervisor, setSupervisor] = useState<string>('')
   const [nombreEquipo, setNombreEquipo] = useState<string>('')
 
   // Obtener vendedores según el email del usuario
@@ -72,14 +71,12 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
         const equipo = equipos.find(e => e.email === userEmail.toLowerCase())
 
         if (equipo) {
-          setSupervisor(equipo.supervisor)
           setNombreEquipo(equipo.nombre_equipo)
           // Cargar vendedores del equipo
           const data = await getVendedoresByEquipo(equipo.id)
           setVendedores(data)
         } else {
           setVendedores([])
-          setSupervisor('')
           setNombreEquipo('')
         }
       } catch (error) {
@@ -118,7 +115,7 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
     const tipoContrato = vendedor.tipo === 'contratado' ? 'Contratado' : 'Honorario'
     // Normalizar nombreEquipo con primera letra mayúscula
     const nombreEquipoNormalizado = toDisplayFormat(nombreEquipo)
-    onChange(nombreFinal, tipoContrato, supervisor, nombreEquipoNormalizado)
+    onChange(nombreFinal, tipoContrato, nombreEquipoNormalizado)
     setShowSuggestions(false)
   }
 
@@ -133,7 +130,7 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
     if (inputValue.trim() === '') {
       // Permitir valor vacío para ventas sin vendedor (mostrar como "Vacío")
       setInputValue('')
-      onChange('', null, supervisor, nombreEquipoNormalizado)
+      onChange('', null, nombreEquipoNormalizado)
     } else {
       // "otro" siempre en minúsculas, el resto se normaliza
       const normalizado = inputValue.toLowerCase() === 'otro'
@@ -144,10 +141,10 @@ export function VendedorAutocomplete({ userEmail, value, onChange }: VendedorAut
       const vendedorEnLista = vendedores.find(v => v.nombre.toLowerCase() === inputValue.toLowerCase())
       if (vendedorEnLista) {
         const tipoContrato = vendedorEnLista.tipo === 'contratado' ? 'Contratado' : 'Honorario'
-        onChange(normalizado, tipoContrato, supervisor, nombreEquipoNormalizado)
+        onChange(normalizado, tipoContrato, nombreEquipoNormalizado)
       } else {
         // Entrada manual: enviar con null para que no se guarde en Supabase
-        onChange(normalizado, null, supervisor, nombreEquipoNormalizado)
+        onChange(normalizado, null, nombreEquipoNormalizado)
       }
     }
   }

@@ -52,8 +52,8 @@ import { supabase } from "../lib/supabase";
  * }
  */
 export function Login() {
-  // Estados para guardar email y password (como en RN)
-  const [email, setEmail] = useState("");
+  // Estados para guardar email/codigo y password
+  const [emailOrCode, setEmailOrCode] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -63,18 +63,48 @@ export function Login() {
     setLoading(true);
     setError("");
 
-    // Llamada a Supabase para hacer login
-    const { error: loginError } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    try {
+      let emailToLogin = emailOrCode;
 
-    setLoading(false);
+      // Si el input es numérico, buscar el email correspondiente en equipos
+      const isNumericCode = /^\d+$/.test(emailOrCode.trim());
 
-    if (loginError) {
-      setError(loginError.message);
+      if (isNumericCode) {
+        console.log('🔍 Buscando email para código:', emailOrCode);
+
+        const { data: equipo, error: queryError } = await supabase
+          .from('equipos')
+          .select('email')
+          .eq('codigo_usuario', emailOrCode.trim())
+          .single();
+
+        if (queryError || !equipo) {
+          setLoading(false);
+          setError('Código de usuario no válido');
+          return;
+        }
+
+        emailToLogin = equipo.email;
+        console.log('✅ Email encontrado:', emailToLogin);
+      }
+
+      // Llamada a Supabase para hacer login con el email
+      const { error: loginError } = await supabase.auth.signInWithPassword({
+        email: emailToLogin,
+        password: password,
+      });
+
+      setLoading(false);
+
+      if (loginError) {
+        setError(loginError.message);
+      }
+      // Si no hay error, el hook useAuth detectará automáticamente el cambio
+    } catch (err) {
+      setLoading(false);
+      setError('Error al iniciar sesión');
+      console.error('Error en login:', err);
     }
-    // Si no hay error, el hook useAuth detectará automáticamente el cambio
   };
 
   return (
@@ -82,15 +112,15 @@ export function Login() {
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-gray-900 mb-6">Login EBSA</h1>
 
-        {/* Input de Email */}
+        {/* Input de Email o Código */}
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Email</label>
+          <label className="block text-gray-700 mb-2">Email o Código de Usuario</label>
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={emailOrCode}
+            onChange={(e) => setEmailOrCode(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="tu@email.com"
+            placeholder="tu@email.com o 100103"
           />
         </div>
 
