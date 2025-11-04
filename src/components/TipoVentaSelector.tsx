@@ -36,7 +36,9 @@ interface TipoVentaSelectorProps {
 export function TipoVentaSelector({ value, onChange }: TipoVentaSelectorProps) {
   const tiposVenta = [
     { id: 'nueva', nombre: 'Nueva' },
-    { id: 'paquetizacion', nombre: 'Paquetización' }
+    { id: 'paquetizacion', nombre: 'Paquetización' },
+    { id: 'pagopuf', nombre: 'Pago PUF' },
+    { id: 'reingreso', nombre: 'Reingreso' }
   ]
 
   return (

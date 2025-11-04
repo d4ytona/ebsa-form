@@ -8,7 +8,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { getTramosHorarios, type TramoHorario } from "../lib/supabaseQueries";
 import { validateAddress, formatAddress, errorMessages } from "../utils/validators";
-import { TipoCampanaSelector } from "./TipoCampanaSelector";
 import { FechaAgendamientoSelector } from "./FechaAgendamientoSelector";
 import { FileUpload } from "./FileUpload";
 
@@ -48,11 +47,9 @@ interface InformacionAdicionalProps {
   canExpand?: boolean;
   fechaAgendamiento: string;
   tramoInstalacion: string;
-  tipoCampana: string;
   comentarioVendedor: string;
   onFechaChange: (value: string) => void;
   onTramoChange: (value: string) => void;
-  onTipoCampanaChange: (value: string) => void;
   onComentarioChange: (value: string) => void;
   rut: string;
   rutFrontalUrls: string[];
@@ -138,11 +135,9 @@ export function InformacionAdicional({
   canExpand = true,
   fechaAgendamiento,
   tramoInstalacion,
-  tipoCampana,
   comentarioVendedor,
   onFechaChange,
   onTramoChange,
-  onTipoCampanaChange,
   onComentarioChange,
   rut,
   rutFrontalUrls,
@@ -294,12 +289,6 @@ export function InformacionAdicional({
               </div>
             )}
           </div>
-
-          {/* Tipo de Campaña */}
-          <TipoCampanaSelector
-            value={tipoCampana}
-            onChange={onTipoCampanaChange}
-          />
 
           {/* Sección de Documentos */}
           <div className="mb-6">

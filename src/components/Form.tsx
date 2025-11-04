@@ -267,7 +267,6 @@ export function Form({ user, onSignOut }: FormProps) {
   const [rut, setRut] = useState("");
   const [nombres, setNombres] = useState("");
   const [apellidos, setApellidos] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
   const [numeroContacto, setNumeroContacto] = useState("");
   const [email, setEmail] = useState("");
   const [nombreEmpresa, setNombreEmpresa] = useState("");
@@ -298,7 +297,6 @@ export function Form({ user, onSignOut }: FormProps) {
   // Estados para Información Adicional
   const [fechaAgendamiento, setFechaAgendamiento] = useState("");
   const [tramoInstalacion, setTramoInstalacion] = useState("");
-  const [tipoCampana, setTipoCampana] = useState("");
   const [comentarioVendedor, setComentarioVendedor] = useState("");
 
   // Estados para colapsar/expandir secciones
@@ -325,7 +323,6 @@ export function Form({ user, onSignOut }: FormProps) {
       setRut(data.rut || "");
       setNombres(data.nombres || "");
       setApellidos(data.apellidos || "");
-      setFechaNacimiento(data.fechaNacimiento || "");
       setNumeroContacto(data.numeroContacto || "");
       setEmail(data.email || "");
       setNombreEmpresa(data.nombreEmpresa || "");
@@ -346,7 +343,6 @@ export function Form({ user, onSignOut }: FormProps) {
       setSelectedAdicionales(data.selectedAdicionales || []);
       setFechaAgendamiento(data.fechaAgendamiento || "");
       setTramoInstalacion(data.tramoInstalacion || "");
-      setTipoCampana(data.tipoCampana || "");
       setComentarioVendedor(data.comentarioVendedor || "");
     }
   }, []);
@@ -394,7 +390,6 @@ export function Form({ user, onSignOut }: FormProps) {
       rut,
       nombres,
       apellidos,
-      fechaNacimiento,
       numeroContacto,
       email,
       nombreEmpresa,
@@ -415,7 +410,6 @@ export function Form({ user, onSignOut }: FormProps) {
       selectedAdicionales,
       fechaAgendamiento,
       tramoInstalacion,
-      tipoCampana,
       comentarioVendedor,
     };
     localStorage.setItem("ebsa-form-data", JSON.stringify(formData));
@@ -431,7 +425,6 @@ export function Form({ user, onSignOut }: FormProps) {
     rut,
     nombres,
     apellidos,
-    fechaNacimiento,
     numeroContacto,
     email,
     nombreEmpresa,
@@ -452,7 +445,6 @@ export function Form({ user, onSignOut }: FormProps) {
     selectedAdicionales,
     fechaAgendamiento,
     tramoInstalacion,
-    tipoCampana,
     comentarioVendedor,
   ]);
 
@@ -577,7 +569,6 @@ export function Form({ user, onSignOut }: FormProps) {
       rut,
       nombres,
       apellidos,
-      fechaNacimiento,
       numeroContacto,
       email,
       // Solo incluir datos de empresa si el segmento es negocio
@@ -602,7 +593,6 @@ export function Form({ user, onSignOut }: FormProps) {
       selectedAdicionales,
       fechaAgendamiento,
       tramoInstalacion,
-      tipoCampana,
       comentarioVendedor,
       // Nombre del equipo obtenido desde Supabase (solo para mostrar en UI)
       equipo: nombreEquipo,
@@ -651,9 +641,9 @@ export function Form({ user, onSignOut }: FormProps) {
    */
   const canContinueSolicitante = () => {
     if (selectedSegmento === 'residencial') {
-      return rut && nombres && apellidos && fechaNacimiento && numeroContacto && email;
+      return rut && nombres && apellidos && numeroContacto && email;
     } else if (selectedSegmento === 'negocio') {
-      return nombreEmpresa && rutEmpresa && rut && nombres && apellidos && fechaNacimiento && numeroContacto && email;
+      return nombreEmpresa && rutEmpresa && rut && nombres && apellidos && numeroContacto && email;
     }
     return false;
   };
@@ -717,7 +707,7 @@ export function Form({ user, onSignOut }: FormProps) {
    * @returns {boolean} true si todos los campos obligatorios están completos
    */
   const canContinueInfoAdicional = () => {
-    return fechaAgendamiento && tramoInstalacion && tipoCampana;
+    return fechaAgendamiento && tramoInstalacion;
   };
 
   return (
@@ -829,7 +819,6 @@ export function Form({ user, onSignOut }: FormProps) {
                 rut={rut}
                 nombres={nombres}
                 apellidos={apellidos}
-                fechaNacimiento={fechaNacimiento}
                 numeroContacto={numeroContacto}
                 email={email}
                 nombreEmpresa={nombreEmpresa}
@@ -837,7 +826,6 @@ export function Form({ user, onSignOut }: FormProps) {
                 onRutChange={setRut}
                 onNombresChange={setNombres}
                 onApellidosChange={setApellidos}
-                onFechaNacimientoChange={setFechaNacimiento}
                 onNumeroContactoChange={setNumeroContacto}
                 onEmailChange={setEmail}
                 onNombreEmpresaChange={setNombreEmpresa}
@@ -935,11 +923,9 @@ export function Form({ user, onSignOut }: FormProps) {
                 canExpand={!!canContinuePlan()}
                 fechaAgendamiento={fechaAgendamiento}
                 tramoInstalacion={tramoInstalacion}
-                tipoCampana={tipoCampana}
                 comentarioVendedor={comentarioVendedor}
                 onFechaChange={setFechaAgendamiento}
                 onTramoChange={setTramoInstalacion}
-                onTipoCampanaChange={setTipoCampana}
                 onComentarioChange={setComentarioVendedor}
                 rut={rut}
                 rutFrontalUrls={rutFrontalUrls}

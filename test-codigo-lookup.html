@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Código Lookup</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h1>Test Búsqueda de Código</h1>
+  <input id="codigo" type="text" placeholder="Código (ej: 100103)" />
+  <button onclick="buscarCodigo()">Buscar</button>
+  <pre id="resultado"></pre>
+
+  <script>
+    // Configuración de Supabase
+    const supabaseUrl = 'https://yiheqsnsbfmudmpquuco.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpaGVxc25zYmZtdWRtcHF1dWNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA4OTA1NjQsImV4cCI6MjA3NjQ2NjU2NH0._WTB2GY1i29M19x4N_TuMNzAGnFhko-Ekle9bUQHfS4';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function buscarCodigo() {
+      const codigo = document.getElementById('codigo').value;
+      const resultado = document.getElementById('resultado');
+
+      resultado.textContent = 'Buscando...\n';
+
+      try {
+        // Intentar buscar el código en la tabla equipos
+        const { data, error } = await supabase
+          .from('equipos')
+          .select('email, codigo_usuario, nombre')
+          .eq('codigo_usuario', codigo)
+          .single();
+
+        resultado.textContent = JSON.stringify({ data, error }, null, 2);
+
+        if (error) {
+          resultado.textContent += '\n\n❌ ERROR: ' + error.message;
+          if (error.code === 'PGRST116') {
+            resultado.textContent += '\n\n⚠️ Posible causa: RLS está bloqueando el acceso a la tabla equipos';
+          }
+        } else if (data) {
+          resultado.textContent += '\n\n✅ Email encontrado: ' + data.email;
+        }
+      } catch (err) {
+        resultado.textContent = '❌ Error: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>

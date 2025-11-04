@@ -56,7 +56,6 @@ interface FormData {
   rut: string;
   nombres: string;
   apellidos: string;
-  fechaNacimiento: string;
   numeroContacto: string;
   email: string;
   nombreEmpresa?: string;
@@ -73,7 +72,6 @@ interface FormData {
   selectedAdicionales: string[];
   fechaAgendamiento: string;
   tramoInstalacion: string;
-  tipoCampana: string;
   comentarioVendedor: string;
   rutFrontalUrls?: string[];
   rutPosteriorUrls?: string[];
@@ -413,14 +411,6 @@ export function Confirmacion() {
               </li>
               <li className="flex border-b border-gray-200 pb-2">
                 <span className="font-semibold text-gray-700 w-1/3">
-                  Fecha de Nacimiento:
-                </span>
-                <span className="text-gray-900">
-                  {formatFecha(formData.fechaNacimiento)}
-                </span>
-              </li>
-              <li className="flex border-b border-gray-200 pb-2">
-                <span className="font-semibold text-gray-700 w-1/3">
                   Número de Contacto:
                 </span>
                 <span className="text-gray-900">{formData.numeroContacto}</span>
@@ -511,14 +501,6 @@ export function Confirmacion() {
                   {formatTramo(formData.tramoInstalacion)}
                 </span>
               </li>
-              <li className="flex border-b border-gray-200 pb-2">
-                <span className="font-semibold text-gray-700 w-1/3">
-                  Tipo de Campaña:
-                </span>
-                <span className="text-gray-900 capitalize">
-                  {formData.tipoCampana}
-                </span>
-              </li>
               {formData.comentarioVendedor && (
                 <li className="flex border-b border-gray-200 pb-2">
                   <span className="font-semibold text-gray-700 w-1/3">
@@ -537,10 +519,10 @@ export function Confirmacion() {
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
               📎 Documentos Adjuntos
             </h3>
-            {(formData.rutFrontalUrls?.length > 0 ||
-              formData.rutPosteriorUrls?.length > 0 ||
-              formData.factibilidadUrls?.length > 0 ||
-              formData.otrosDocumentosUrls?.length > 0) ? (
+            {((formData.rutFrontalUrls?.length ?? 0) > 0 ||
+              (formData.rutPosteriorUrls?.length ?? 0) > 0 ||
+              (formData.factibilidadUrls?.length ?? 0) > 0 ||
+              (formData.otrosDocumentosUrls?.length ?? 0) > 0) ? (
               <ul className="space-y-2">
                 {formData.rutFrontalUrls?.map((url, index) => (
                   <li key={`rut-frontal-${index}`} className="flex items-center gap-2">

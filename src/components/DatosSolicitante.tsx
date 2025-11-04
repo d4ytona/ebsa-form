@@ -7,7 +7,6 @@
 
 import { useState } from 'react'
 import { TextInput } from './TextInput'
-import { FechaNacimientoSelector } from './FechaNacimientoSelector'
 import {
   validateRut,
   formatRut,
@@ -57,7 +56,6 @@ interface DatosSolicitanteProps {
   rut: string
   nombres: string
   apellidos: string
-  fechaNacimiento: string
   numeroContacto: string
   email: string
   // Campos solo para negocio
@@ -67,7 +65,6 @@ interface DatosSolicitanteProps {
   onRutChange: (value: string) => void
   onNombresChange: (value: string) => void
   onApellidosChange: (value: string) => void
-  onFechaNacimientoChange: (value: string) => void
   onNumeroContactoChange: (value: string) => void
   onEmailChange: (value: string) => void
   onNombreEmpresaChange: (value: string) => void
@@ -297,10 +294,6 @@ export function DatosSolicitante(props: DatosSolicitanteProps) {
             onBlur={handleApellidosBlur}
             placeholder="Pérez González"
             error={apellidosError}
-          />
-          <FechaNacimientoSelector
-            value={props.fechaNacimiento}
-            onChange={props.onFechaNacimientoChange}
           />
           <TextInput
             label="Número de Contacto"
