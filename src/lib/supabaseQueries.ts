@@ -411,3 +411,44 @@ export function toDisplayFormat(text: string): string {
 export function formatNumeroRomano(numeroRomano: string): string {
   return numeroRomano.toUpperCase()
 }
+
+// =============================================
+// PEDIDOS
+// =============================================
+
+/**
+ * Obtiene todos los pedidos realizados por un equipo (basado en email del usuario).
+ * Retorna los pedidos ordenados por fecha de creación descendente.
+ * Útil para reingresos: permite buscar clientes anteriores por RUT y dirección.
+ *
+ * @param userEmail - Email del usuario del equipo
+ * @returns Array de pedidos del equipo con todos sus datos
+ */
+export async function getPedidosPorEquipo(userEmail: string): Promise<any[]> {
+  try {
+    // Primero obtener el equipo del usuario
+    const { data: equipos, error: equipoError } = await supabase
+      .from('equipos_active')
+      .select('id')
+      .eq('email', userEmail.toLowerCase())
+      .limit(1)
+
+    if (equipoError) throw equipoError
+    if (!equipos || equipos.length === 0) return []
+
+    const equipoId = equipos[0].id
+
+    // Obtener todos los pedidos del equipo
+    const { data, error } = await supabase
+      .from('pedidos')
+      .select('*')
+      .eq('equipo_id', equipoId)
+      .order('created_at', { ascending: false })
+
+    if (error) throw error
+    return data || []
+  } catch (error) {
+    console.error('Error obteniendo pedidos del equipo:', error)
+    throw error
+  }
+}

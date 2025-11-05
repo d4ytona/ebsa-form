@@ -13,6 +13,7 @@ import { CodigoAutocomplete } from "./CodigoAutocomplete";
 import { SegmentoSelector } from "./SegmentoSelector";
 import { TipoVentaSelector } from "./TipoVentaSelector";
 import { TipoAgenteSelector } from "./TipoAgenteSelector";
+import { RutReingresoAutocomplete } from "./RutReingresoAutocomplete";
 import { DatosSolicitante } from "./DatosSolicitante";
 import { Direccion } from "./Direccion";
 import { Plan } from "./Plan";
@@ -553,6 +554,36 @@ export function Form({ user, onSignOut }: FormProps) {
   };
 
   /**
+   * Handler para autocompletar formulario desde un pedido de reingreso.
+   * Rellena todos los campos del formulario con datos del pedido anterior.
+   */
+  const handleReingresoAutocomplete = (_rut: string, datosPedido: Record<string, unknown>) => {
+    // Datos del solicitante
+    setRut((datosPedido.rut as string) || "");
+    setNombres((datosPedido.nombres as string) || "");
+    setApellidos((datosPedido.apellidos as string) || "");
+    setNumeroContacto((datosPedido.numero_contacto as string) || "");
+    setEmail((datosPedido.email as string) || "");
+    setNombreEmpresa((datosPedido.nombre_empresa as string) || "");
+    setRutEmpresa((datosPedido.rut_empresa as string) || "");
+
+    // Dirección
+    setRegion((datosPedido.region as string) || "");
+    setComuna((datosPedido.comuna as string) || "");
+    setDireccion((datosPedido.direccion as string) || "");
+
+    // Plan y servicios
+    setHasInternet((datosPedido.tiene_internet as boolean) || false);
+    setHasTelevision((datosPedido.tiene_television as boolean) || false);
+    setHasTelefonia((datosPedido.tiene_telefonia as boolean) || false);
+    setVelocidadInternet((datosPedido.velocidad_internet as string) || "");
+    setTipoTelevision((datosPedido.tipo_television as string) || "");
+    setSelectedPlan((datosPedido.plan as string) || "");
+
+    console.log("Formulario autocompletado desde pedido de reingreso:", datosPedido.id);
+  };
+
+  /**
    * Finaliza el formulario y navega a la página de confirmación.
    * Prepara todos los datos del formulario, incluyendo campos condicionales según el segmento,
    * y los pasa mediante React Router state a la página de confirmación.
@@ -754,6 +785,20 @@ export function Form({ user, onSignOut }: FormProps) {
               {/* Contenido de la sección (colapsable) */}
               {!isGeneralCollapsed && (
                 <div className="p-4 border-t-2 border-gray-200">
+                  <TipoVentaSelector
+                    value={selectedTipoVenta}
+                    onChange={setSelectedTipoVenta}
+                  />
+
+                  {/* Mostrar buscador de RUT para reingreso */}
+                  {selectedTipoVenta === 'reingreso' && (
+                    <RutReingresoAutocomplete
+                      userEmail={user.email || ""}
+                      value={rut}
+                      onChange={handleReingresoAutocomplete}
+                    />
+                  )}
+
                   <VendedorAutocomplete
                     userEmail={user.email || ""}
                     value={selectedVendedor}
@@ -782,11 +827,6 @@ export function Form({ user, onSignOut }: FormProps) {
                   <SegmentoSelector
                     value={selectedSegmento}
                     onChange={setSelectedSegmento}
-                  />
-
-                  <TipoVentaSelector
-                    value={selectedTipoVenta}
-                    onChange={setSelectedTipoVenta}
                   />
 
                   {/* Botón Continuar */}
