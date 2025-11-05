@@ -7,6 +7,28 @@ import { useState, useEffect, useMemo } from "react";
 import { getPedidosPorEquipo } from "../lib/supabaseQueries";
 
 /**
+ * Capitaliza la primera letra de cada palabra en un string
+ */
+function capitalizeWords(text: string): string {
+  return text
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/**
+ * Formatea una fecha ISO a formato dd/mm/yyyy
+ */
+function formatDate(isoDate: string): string {
+  const date = new Date(isoDate);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+/**
  * Interfaz para un pedido previo resumido
  */
 interface PedidoPrevio {
@@ -16,6 +38,8 @@ interface PedidoPrevio {
   direccion_completa: string;
   /** Nombre del vendedor */
   vendedor: string;
+  /** Fecha de creación del pedido */
+  fecha_creacion: string;
   /** ID del pedido */
   id: string;
   /** Todos los datos del pedido para autocompletar */
@@ -75,14 +99,22 @@ export function RutReingresoAutocomplete({
       try {
         const pedidos = await getPedidosPorEquipo(userEmail);
 
-        // Transformar a formato simplificado
-        const pedidosFormateados: PedidoPrevio[] = pedidos.map(pedido => ({
-          rut: pedido.rut_solicitante || "",
-          direccion_completa: `${pedido.direccion || ""}, ${pedido.comuna || ""}, ${pedido.region || ""}`.trim(),
-          vendedor: pedido.vendedor || "",
-          id: pedido.id,
-          datos: pedido
-        }));
+        // Transformar a formato simplificado con capitalización
+        const pedidosFormateados: PedidoPrevio[] = pedidos.map(pedido => {
+          const direccion = capitalizeWords(pedido.direccion || "");
+          const comuna = capitalizeWords(pedido.comuna || "");
+          const region = capitalizeWords(pedido.region || "");
+          const vendedor = capitalizeWords(pedido.vendedor || "");
+
+          return {
+            rut: pedido.rut_solicitante || "",
+            direccion_completa: `${direccion}, ${comuna}, ${region}`.trim(),
+            vendedor: vendedor,
+            fecha_creacion: pedido.created_at ? formatDate(pedido.created_at) : "",
+            id: pedido.id,
+            datos: pedido
+          };
+        });
 
         setPedidosPrevios(pedidosFormateados);
       } catch (error) {
@@ -107,7 +139,7 @@ export function RutReingresoAutocomplete({
   }, [pedidosPrevios, searchTerm]);
 
   const handleSelect = (pedido: PedidoPrevio) => {
-    setSearchTerm(`${pedido.rut} - ${pedido.direccion_completa} - ${pedido.vendedor}`);
+    setSearchTerm(`${pedido.rut} - ${pedido.direccion_completa} - ${pedido.vendedor} - ${pedido.fecha_creacion}`);
     setShowDropdown(false);
     onChange(pedido.rut, pedido.datos);
   };
@@ -146,6 +178,7 @@ export function RutReingresoAutocomplete({
               <p className="font-semibold text-gray-900">{pedido.rut}</p>
               <p className="text-sm text-gray-600">{pedido.direccion_completa}</p>
               <p className="text-sm text-blue-600 font-medium">{pedido.vendedor}</p>
+              <p className="text-sm text-gray-500">{pedido.fecha_creacion}</p>
             </div>
           ))}
         </div>
