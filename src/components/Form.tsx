@@ -558,11 +558,22 @@ export function Form({ user, onSignOut }: FormProps) {
    * Rellena todos los campos del formulario con datos del pedido anterior.
    */
   const handleReingresoAutocomplete = (_rut: string, datosPedido: Record<string, unknown>) => {
-    // Datos del solicitante
-    setRut((datosPedido.rut as string) || "");
-    setNombres((datosPedido.nombres as string) || "");
-    setApellidos((datosPedido.apellidos as string) || "");
-    setNumeroContacto((datosPedido.numero_contacto as string) || "");
+    // Datos del solicitante - usar nombres de columna de la DB existente
+    setRut((datosPedido.rut_solicitante as string) || "");
+
+    // Si existen nombres y apellidos separados, usarlos; sino extraer de nombre_solicitante
+    if (datosPedido.nombres && datosPedido.apellidos) {
+      setNombres((datosPedido.nombres as string) || "");
+      setApellidos((datosPedido.apellidos as string) || "");
+    } else if (datosPedido.nombre_solicitante) {
+      const nombreCompleto = (datosPedido.nombre_solicitante as string).split(" ");
+      const nombres = nombreCompleto.slice(0, Math.ceil(nombreCompleto.length / 2)).join(" ");
+      const apellidos = nombreCompleto.slice(Math.ceil(nombreCompleto.length / 2)).join(" ");
+      setNombres(nombres);
+      setApellidos(apellidos);
+    }
+
+    setNumeroContacto((datosPedido.numero_telefono as string) || "");
     setEmail((datosPedido.email as string) || "");
     setNombreEmpresa((datosPedido.nombre_empresa as string) || "");
     setRutEmpresa((datosPedido.rut_empresa as string) || "");
@@ -572,7 +583,7 @@ export function Form({ user, onSignOut }: FormProps) {
     setComuna((datosPedido.comuna as string) || "");
     setDireccion((datosPedido.direccion as string) || "");
 
-    // Plan y servicios
+    // Plan y servicios - usar los nuevos campos si existen
     setHasInternet((datosPedido.tiene_internet as boolean) || false);
     setHasTelevision((datosPedido.tiene_television as boolean) || false);
     setHasTelefonia((datosPedido.tiene_telefonia as boolean) || false);

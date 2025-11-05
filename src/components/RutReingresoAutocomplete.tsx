@@ -75,7 +75,7 @@ export function RutReingresoAutocomplete({
 
         // Transformar a formato simplificado
         const pedidosFormateados: PedidoPrevio[] = pedidos.map(pedido => ({
-          rut: pedido.rut || "",
+          rut: pedido.rut_solicitante || "",
           direccion_completa: `${pedido.direccion || ""}, ${pedido.comuna || ""}, ${pedido.region || ""}`.trim(),
           id: pedido.id,
           datos: pedido
