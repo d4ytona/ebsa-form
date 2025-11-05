@@ -583,12 +583,7 @@ export function Form({ user, onSignOut }: FormProps) {
     setComuna((datosPedido.comuna as string) || "");
     setDireccion((datosPedido.direccion as string) || "");
 
-    // Plan y servicios - usar los nuevos campos si existen
-    setHasInternet((datosPedido.tiene_internet as boolean) || false);
-    setHasTelevision((datosPedido.tiene_television as boolean) || false);
-    setHasTelefonia((datosPedido.tiene_telefonia as boolean) || false);
-    setVelocidadInternet((datosPedido.velocidad_internet as string) || "");
-    setTipoTelevision((datosPedido.tipo_television as string) || "");
+    // Plan (sin autocompletar servicios, solo el plan final seleccionado)
     setSelectedPlan((datosPedido.plan as string) || "");
 
     console.log("Formulario autocompletado desde pedido de reingreso:", datosPedido.id);

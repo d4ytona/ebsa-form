@@ -423,14 +423,6 @@ export default async function handler(req, res) {
         plan: formData.selectedPlan,
         productos_adicionales: formData.selectedAdicionales?.join(", ") || null,
         rgu: rgu,
-        tipo_campana: formData.tipoCampana || null,
-        tiene_internet: formData.hasInternet || false,
-        tiene_television: formData.hasTelevision || false,
-        tiene_telefonia: formData.hasTelefonia || false,
-        velocidad_internet: formData.velocidadInternet || null,
-        tipo_television: formData.tipoTelevision || null,
-        fecha_agendamiento: formData.fechaAgendamiento || null,
-        tramo_instalacion: formData.tramoInstalacion || null,
         rut_frontal_url:
           Array.isArray(formData.rutFrontalUrls) &&
           formData.rutFrontalUrls.length > 0
