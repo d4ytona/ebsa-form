@@ -2,9 +2,27 @@
 
 Este directorio contiene las migraciones SQL para la base de datos de Supabase.
 
+## 🚨 PROBLEMA ACTUAL DETECTADO
+
+**Error**: `permission denied for table pedidos (Code: 42501)`
+
+**Causa**: Las políticas RLS (Row Level Security) están bloqueando los inserts desde el frontend.
+
+**Solución**: Ejecutar primero `check-current-policies.sql` para ver las políticas actuales, luego ejecutar `003_enable_public_access.sql` para permitir acceso público.
+
 ## Orden de Ejecución
 
 Las migraciones deben ejecutarse en orden numérico:
+
+### 0. check-current-policies.sql (EJECUTAR PRIMERO)
+**Descripción**: Verificar políticas RLS actuales en tabla pedidos
+
+**Propósito**:
+- Ver si RLS está habilitado
+- Listar todas las políticas existentes
+- Entender qué está bloqueando los inserts
+
+**Ejecutar**: Copiar y pegar en Supabase SQL Editor
 
 ### 001_add_nombres_apellidos.sql
 **Descripción**: Agrega columnas `nombres` y `apellidos` a la tabla `pedidos`
@@ -23,6 +41,24 @@ Las migraciones deben ejecutarse en orden numérico:
 **Descripción**: Elimina la columna `tipo_campana` de la tabla `pedidos`
 
 **Propósito**: Limpiar columnas que ya no se utilizan en el formulario
+
+**Ejecutar**:
+```sql
+-- Copiar y pegar el contenido del archivo en Supabase SQL Editor
+```
+
+### 003_enable_public_access.sql ⚠️ CRÍTICO
+**Descripción**: Elimina todas las políticas RLS y habilita acceso público total
+
+**Propósito**:
+- Permitir que el formulario inserte pedidos desde el frontend
+- Permitir consultas para funcionalidad de reingreso
+- Eliminar bloqueos de "permission denied"
+
+**⚠️ IMPORTANTE**: Este script:
+1. Muestra las políticas actuales
+2. Elimina TODAS las políticas existentes
+3. Crea una única política que permite TODO a TODOS los usuarios (incluyendo anon)
 
 **Ejecutar**:
 ```sql
