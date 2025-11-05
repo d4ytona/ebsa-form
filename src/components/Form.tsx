@@ -558,6 +558,12 @@ export function Form({ user, onSignOut }: FormProps) {
    * Rellena todos los campos del formulario con datos del pedido anterior.
    */
   const handleReingresoAutocomplete = (_rut: string, datosPedido: Record<string, unknown>) => {
+    // Datos generales
+    setSelectedVendedor((datosPedido.vendedor as string) || "");
+    setSelectedCodigo((datosPedido.codigo_vendedor as string) || "");
+    setSelectedMarca((datosPedido.marca as string) || "");
+    setSelectedSegmento((datosPedido.segmento as string) || "");
+
     // Datos del solicitante - usar nombres de columna de la DB existente
     setRut((datosPedido.rut_solicitante as string) || "");
 
@@ -583,8 +589,25 @@ export function Form({ user, onSignOut }: FormProps) {
     setComuna((datosPedido.comuna as string) || "");
     setDireccion((datosPedido.direccion as string) || "");
 
-    // Plan (sin autocompletar servicios, solo el plan final seleccionado)
+    // Plan y servicios
     setSelectedPlan((datosPedido.plan as string) || "");
+
+    // Productos adicionales
+    if (datosPedido.productos_adicionales && typeof datosPedido.productos_adicionales === 'string') {
+      const adicionales = datosPedido.productos_adicionales.split(',').map(p => p.trim());
+      setSelectedAdicionales(adicionales);
+    }
+
+    // Información adicional
+    setComentarioVendedor((datosPedido.observacion_vendedor as string) || "");
+
+    // Expandir secciones para que el usuario vea los datos
+    setIsGeneralCollapsed(false);
+    setIsSolicitanteCollapsed(false);
+    setIsDireccionCollapsed(false);
+    setIsPlanCollapsed(false);
+    setIsAdicionalesCollapsed(false);
+    setIsInfoAdicionalCollapsed(false);
 
     console.log("Formulario autocompletado desde pedido de reingreso:", datosPedido.id);
   };
