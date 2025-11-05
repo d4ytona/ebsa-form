@@ -426,23 +426,23 @@ export function formatNumeroRomano(numeroRomano: string): string {
  */
 export async function getPedidosPorEquipo(userEmail: string): Promise<any[]> {
   try {
-    // Primero obtener el equipo del usuario
+    // Primero obtener el nombre del equipo del usuario
     const { data: equipos, error: equipoError } = await supabase
       .from('equipos_active')
-      .select('id')
+      .select('nombre_equipo')
       .eq('email', userEmail.toLowerCase())
       .limit(1)
 
     if (equipoError) throw equipoError
     if (!equipos || equipos.length === 0) return []
 
-    const equipoId = equipos[0].id
+    const nombreEquipo = equipos[0].nombre_equipo
 
-    // Obtener todos los pedidos del equipo
+    // Obtener todos los pedidos del equipo (campo 'equipo' es string con nombre)
     const { data, error } = await supabase
       .from('pedidos')
       .select('*')
-      .eq('equipo_id', equipoId)
+      .eq('equipo', nombreEquipo)
       .order('created_at', { ascending: false })
 
     if (error) throw error

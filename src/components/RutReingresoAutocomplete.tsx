@@ -14,6 +14,8 @@ interface PedidoPrevio {
   rut: string;
   /** Dirección completa del cliente */
   direccion_completa: string;
+  /** Nombre del vendedor */
+  vendedor: string;
   /** ID del pedido */
   id: string;
   /** Todos los datos del pedido para autocompletar */
@@ -77,6 +79,7 @@ export function RutReingresoAutocomplete({
         const pedidosFormateados: PedidoPrevio[] = pedidos.map(pedido => ({
           rut: pedido.rut_solicitante || "",
           direccion_completa: `${pedido.direccion || ""}, ${pedido.comuna || ""}, ${pedido.region || ""}`.trim(),
+          vendedor: pedido.vendedor || "",
           id: pedido.id,
           datos: pedido
         }));
@@ -93,20 +96,18 @@ export function RutReingresoAutocomplete({
     fetchPedidosPrevios();
   }, [userEmail]);
 
-  // Filtrar pedidos según término de búsqueda
+  // Filtrar pedidos según término de búsqueda (solo por RUT)
   const pedidosFiltrados = useMemo(() => {
     if (!searchTerm) return pedidosPrevios;
 
     const termLower = searchTerm.toLowerCase();
     return pedidosPrevios.filter(
-      (pedido) =>
-        pedido.rut.toLowerCase().includes(termLower) ||
-        pedido.direccion_completa.toLowerCase().includes(termLower)
+      (pedido) => pedido.rut.toLowerCase().includes(termLower)
     );
   }, [pedidosPrevios, searchTerm]);
 
   const handleSelect = (pedido: PedidoPrevio) => {
-    setSearchTerm(`${pedido.rut} - ${pedido.direccion_completa}`);
+    setSearchTerm(`${pedido.rut} - ${pedido.direccion_completa} - ${pedido.vendedor}`);
     setShowDropdown(false);
     onChange(pedido.rut, pedido.datos);
   };
@@ -114,7 +115,7 @@ export function RutReingresoAutocomplete({
   return (
     <div className="mb-6 relative">
       <label className="block text-gray-700 font-semibold mb-2">
-        Buscar RUT de Reingreso
+        Buscar Pedido Anterior por RUT
       </label>
       <input
         type="text"
@@ -124,7 +125,7 @@ export function RutReingresoAutocomplete({
           setShowDropdown(true);
         }}
         onFocus={() => setShowDropdown(true)}
-        placeholder="Buscar por RUT o dirección..."
+        placeholder="Escribe el RUT del cliente..."
         className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
         disabled={loading}
       />
@@ -144,6 +145,7 @@ export function RutReingresoAutocomplete({
             >
               <p className="font-semibold text-gray-900">{pedido.rut}</p>
               <p className="text-sm text-gray-600">{pedido.direccion_completa}</p>
+              <p className="text-sm text-blue-600 font-medium">{pedido.vendedor}</p>
             </div>
           ))}
         </div>
