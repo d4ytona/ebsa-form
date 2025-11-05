@@ -439,10 +439,11 @@ export async function getPedidosPorEquipo(userEmail: string): Promise<any[]> {
     const nombreEquipo = equipos[0].nombre_equipo
 
     // Obtener todos los pedidos del equipo (campo 'equipo' es string con nombre)
+    // Usar ilike para comparación case-insensitive (Machine = machine)
     const { data, error } = await supabase
       .from('pedidos')
       .select('*')
-      .eq('equipo', nombreEquipo)
+      .ilike('equipo', nombreEquipo)
       .order('created_at', { ascending: false })
 
     if (error) throw error
