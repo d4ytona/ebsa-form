@@ -217,31 +217,31 @@ export default async function handler(req, res) {
       T: toUpper(formData.tipoAgente), // AGENTE
       BC: toLower(formData.emailEquipo), // EQUIPO (email del equipo en minúsculas)
       BE: toUpper(formData.selectedVendedor), // VENDEDOR
-      AN: toUpper(formData.rut), // RUT SOLICITANTE
-      AO: toUpper(`${formData.nombres} ${formData.apellidos}`), // NOMBRE SOLICITANTE
-      AP: toUpper(formData.rutEmpresa || ""), // RUT EMPRESA
-      AQ: toUpper(formData.nombreEmpresa || ""), // NOMBRE DE LA EMPRESA (SIN ESPACIOS, NI PUNTOS)
+      AP: toUpper(formData.rut), // RUT SOLICITANTE
+      AQ: toUpper(`${formData.nombres} ${formData.apellidos}`), // NOMBRE SOLICITANTE
+      AR: toUpper(formData.rutEmpresa || ""), // RUT EMPRESA
+      AS: toUpper(formData.nombreEmpresa || ""), // NOMBRE DE LA EMPRESA (SIN ESPACIOS, NI PUNTOS)
       AA: toUpper(formData.region), // REGION
-      AR: toUpper(formData.comuna), // COMUNA
-      AS: toUpper(formData.direccion), // DIRECCION
+      AT: toUpper(formData.comuna), // COMUNA
+      AU: toUpper(formData.direccion), // DIRECCION
       AD: toUpper(formData.numeroContacto), // TELEFONO DE CONTACTO (SIN +56 NI ESPACIOS)
-      AT: toLower(formData.email), // EMAIL (en minúsculas)
-      AU: toUpper(formData.selectedPlan), // PLAN
+      AW: toLower(formData.email), // EMAIL (en minúsculas)
+      AX: toUpper(formData.selectedPlan), // PLAN
       AG: toUpper(formData.selectedAdicionales?.join(", ")), // ADICIONALES
-      BA: rgu, // RGU
+      BC: rgu, // RGU
       AI: toUpper(formData.tipoCampana), // TIPO DE CAMPANA
       AJ: toUpper(formData.fechaAgendamiento || ""), // FECHA DE AGENDAMIENTO
       AK: toUpper(formData.tramoInstalacion || ""), // TRAMO DE INSTALACION
-      AV: Array.isArray(formData.rutFrontalUrls)
+      AL: Array.isArray(formData.rutFrontalUrls)
         ? formData.rutFrontalUrls.join(", ")
         : "", // RUT (IMAGEN FRONTAL)
-      AW: Array.isArray(formData.rutPosteriorUrls)
+      AM: Array.isArray(formData.rutPosteriorUrls)
         ? formData.rutPosteriorUrls.join(", ")
         : "", // RUT (IMAGEN POSTERIOR)
-      AX: Array.isArray(formData.factibilidadUrls)
+      AN: Array.isArray(formData.factibilidadUrls)
         ? formData.factibilidadUrls.join(", ")
         : "", // FACTIBILIDAD ANDES
-      AY: Array.isArray(formData.otrosDocumentosUrls)
+      AO: Array.isArray(formData.otrosDocumentosUrls)
         ? formData.otrosDocumentosUrls.join(", ")
         : "", // OTROS DOCUMENTOS
     };
@@ -396,63 +396,67 @@ export default async function handler(req, res) {
         codigo: codigoParaSupabase,
         equipo: equipoParaSupabase,
         rut: formData.rut,
-        marca: formData.selectedMarca
+        marca: formData.selectedMarca,
       });
 
       // Guardar en Supabase (con null si valores no válidos)
       const { data: pedidoData, error: supabaseError } = await supabase
-      .from("pedidos")
-      .insert({
-        observacion_vendedor: formData.comentarioVendedor,
-        marca: formData.selectedMarca,
-        codigo_vendedor: codigoParaSupabase,
-        tipo_venta: formData.selectedTipoVenta,
-        segmento: formData.selectedSegmento,
-        tipo_agente: formData.tipoAgente,
-        equipo: equipoParaSupabase,
-        vendedor: vendedorParaSupabase,
-        rut_solicitante: formData.rut,
-        nombre_solicitante: `${formData.nombres} ${formData.apellidos}`,
-        nombres: formData.nombres,
-        apellidos: formData.apellidos,
-        rut_empresa: formData.rutEmpresa || null,
-        nombre_empresa: formData.nombreEmpresa || null,
-        region: formData.region,
-        comuna: formData.comuna,
-        direccion: formData.direccion,
-        numero_telefono: formData.numeroContacto,
-        email: formData.email,
-        plan: formData.selectedPlan,
-        productos_adicionales: formData.selectedAdicionales?.join(", ") || null,
-        rgu: rgu,
-        rut_frontal_url:
-          Array.isArray(formData.rutFrontalUrls) &&
-          formData.rutFrontalUrls.length > 0
-            ? formData.rutFrontalUrls.join(", ")
-            : null,
-        rut_posterior_url:
-          Array.isArray(formData.rutPosteriorUrls) &&
-          formData.rutPosteriorUrls.length > 0
-            ? formData.rutPosteriorUrls.join(", ")
-            : null,
-        factibilidad_url:
-          Array.isArray(formData.factibilidadUrls) &&
-          formData.factibilidadUrls.length > 0
-            ? formData.factibilidadUrls.join(", ")
-            : null,
-        otros_documentos_urls:
-          Array.isArray(formData.otrosDocumentosUrls) &&
-          formData.otrosDocumentosUrls.length > 0
-            ? formData.otrosDocumentosUrls.join(", ")
-            : null,
-        fila_sheets: nextRow,
-      })
+        .from("pedidos")
+        .insert({
+          observacion_vendedor: formData.comentarioVendedor,
+          marca: formData.selectedMarca,
+          codigo_vendedor: codigoParaSupabase,
+          tipo_venta: formData.selectedTipoVenta,
+          segmento: formData.selectedSegmento,
+          tipo_agente: formData.tipoAgente,
+          equipo: equipoParaSupabase,
+          vendedor: vendedorParaSupabase,
+          rut_solicitante: formData.rut,
+          nombre_solicitante: `${formData.nombres} ${formData.apellidos}`,
+          nombres: formData.nombres,
+          apellidos: formData.apellidos,
+          rut_empresa: formData.rutEmpresa || null,
+          nombre_empresa: formData.nombreEmpresa || null,
+          region: formData.region,
+          comuna: formData.comuna,
+          direccion: formData.direccion,
+          numero_telefono: formData.numeroContacto,
+          email: formData.email,
+          plan: formData.selectedPlan,
+          productos_adicionales:
+            formData.selectedAdicionales?.join(", ") || null,
+          rgu: rgu,
+          rut_frontal_url:
+            Array.isArray(formData.rutFrontalUrls) &&
+            formData.rutFrontalUrls.length > 0
+              ? formData.rutFrontalUrls.join(", ")
+              : null,
+          rut_posterior_url:
+            Array.isArray(formData.rutPosteriorUrls) &&
+            formData.rutPosteriorUrls.length > 0
+              ? formData.rutPosteriorUrls.join(", ")
+              : null,
+          factibilidad_url:
+            Array.isArray(formData.factibilidadUrls) &&
+            formData.factibilidadUrls.length > 0
+              ? formData.factibilidadUrls.join(", ")
+              : null,
+          otros_documentos_urls:
+            Array.isArray(formData.otrosDocumentosUrls) &&
+            formData.otrosDocumentosUrls.length > 0
+              ? formData.otrosDocumentosUrls.join(", ")
+              : null,
+          fila_sheets: nextRow,
+        })
         .select()
         .single();
 
       if (supabaseError) {
         console.error("=== ERROR AL GUARDAR EN SUPABASE ===");
-        console.error("Error completo:", JSON.stringify(supabaseError, null, 2));
+        console.error(
+          "Error completo:",
+          JSON.stringify(supabaseError, null, 2)
+        );
         console.error("Error code:", supabaseError.code);
         console.error("Error message:", supabaseError.message);
         console.error("Error details:", supabaseError.details);
