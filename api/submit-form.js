@@ -230,16 +230,18 @@ export default async function handler(req, res) {
       AG: toUpper(formData.selectedAdicionales?.join(", ")), // ADICIONALES
       BA: rgu, // RGU
       AI: toUpper(formData.tipoCampana), // TIPO DE CAMPANA
-      AJ: Array.isArray(formData.rutFrontalUrls)
+      AJ: toUpper(formData.fechaAgendamiento || ""), // FECHA DE AGENDAMIENTO
+      AK: toUpper(formData.tramoInstalacion || ""), // TRAMO DE INSTALACION
+      AV: Array.isArray(formData.rutFrontalUrls)
         ? formData.rutFrontalUrls.join(", ")
         : "", // RUT (IMAGEN FRONTAL)
-      AK: Array.isArray(formData.rutPosteriorUrls)
+      AW: Array.isArray(formData.rutPosteriorUrls)
         ? formData.rutPosteriorUrls.join(", ")
         : "", // RUT (IMAGEN POSTERIOR)
-      AL: Array.isArray(formData.factibilidadUrls)
+      AX: Array.isArray(formData.factibilidadUrls)
         ? formData.factibilidadUrls.join(", ")
         : "", // FACTIBILIDAD ANDES
-      AM: Array.isArray(formData.otrosDocumentosUrls)
+      AY: Array.isArray(formData.otrosDocumentosUrls)
         ? formData.otrosDocumentosUrls.join(", ")
         : "", // OTROS DOCUMENTOS
     };

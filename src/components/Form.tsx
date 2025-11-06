@@ -563,6 +563,7 @@ export function Form({ user, onSignOut }: FormProps) {
     setSelectedCodigo((datosPedido.codigo_vendedor as string) || "");
     setSelectedMarca((datosPedido.marca as string) || "");
     setSelectedSegmento((datosPedido.segmento as string) || "");
+    setSelectedTipoAgente((datosPedido.tipo_agente as string) || "");
 
     // Datos del solicitante - usar nombres de columna de la DB existente
     setRut((datosPedido.rut_solicitante as string) || "");
