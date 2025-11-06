@@ -215,8 +215,8 @@ export default async function handler(req, res) {
       R: toUpper(formData.selectedTipoVenta), // TIPO VENTA
       S: toUpper(formData.selectedSegmento), // SEGMENTO DE VENTA
       T: toUpper(formData.tipoAgente), // AGENTE
-      BC: toLower(formData.emailEquipo), // EQUIPO (email del equipo en minúsculas)
-      BE: toUpper(formData.selectedVendedor), // VENDEDOR
+      BE: toLower(formData.emailEquipo), // EQUIPO (email del equipo en minúsculas)
+      BF: toUpper(formData.selectedVendedor), // VENDEDOR
       AP: toUpper(formData.rut), // RUT SOLICITANTE
       AQ: toUpper(`${formData.nombres} ${formData.apellidos}`), // NOMBRE SOLICITANTE
       AR: toUpper(formData.rutEmpresa || ""), // RUT EMPRESA
@@ -225,8 +225,8 @@ export default async function handler(req, res) {
       AT: toUpper(formData.comuna), // COMUNA
       AU: toUpper(formData.direccion), // DIRECCION
       AD: toUpper(formData.numeroContacto), // TELEFONO DE CONTACTO (SIN +56 NI ESPACIOS)
-      AW: toLower(formData.email), // EMAIL (en minúsculas)
-      AX: toUpper(formData.selectedPlan), // PLAN
+      AV: toLower(formData.email), // EMAIL (en minúsculas)
+      AW: toUpper(formData.selectedPlan), // PLAN
       AG: toUpper(formData.selectedAdicionales?.join(", ")), // ADICIONALES
       BC: rgu, // RGU
       AI: toUpper(formData.tipoCampana), // TIPO DE CAMPANA
